@@ -36,7 +36,7 @@ func (a *Authors) List(ctx context.Context) ([]Author, error) {
 }
 
 const (
-	authorsDeleteDDL = `drop table if exists authors;`
+	authorsDropDDL   = `drop table if exists authors;`
 	authorsCreateDDL = `create table authors(
 		id serial primary key,
 		first_name varchar(30) not null,

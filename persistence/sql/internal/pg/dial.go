@@ -5,6 +5,7 @@ package pg
 
 import (
 	"database/sql"
+	"fmt"
 )
 
 const (
@@ -19,12 +20,12 @@ type DialOpts struct {
 	DbName         string
 }
 
-// String flattens to data source
-func (d DialOpts) String() string {
+// Flatten flattens to data source
+func (d DialOpts) Flatten() string {
 	<<!!YOUR_CODE!!>> -- return a postgres connection string
 }
 
 // Dial configures the DB connection.
 func Dial(opts DialOpts) (*sql.DB, error) {
-	return sql.Open(pgDriver, opts.String())
+	return sql.Open(pgDriver, opts.Flatten())
 }

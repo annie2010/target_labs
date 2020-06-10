@@ -41,6 +41,22 @@ func NewBooks(db *sql.DB) *Books {
 	return &Books{db: db}
 }
 
+func (b *Books) init(ctx context.Context) (err error) {
+	if b.byAuthorStmt != nil {
+		return err
+	}
+
+	const byAuthor = `select * from books b
+	  where b.id in (
+			select book_id from books_authors where author_id in (
+				select id from authors a where a.last_name=$1
+			)
+		);
+	`
+	b.byAuthorStmt, err = b.db.PrepareContext(ctx, byAuthor)
+	return
+}
+
 // ByAuthor finds all books by a given author last name.
 func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
 	<<!!YOUR_CODE!!>> -- retrieve all books by the given author (hint: checkout byAuthor const above )
@@ -52,14 +68,14 @@ func (b *Books) List(ctx context.Context) ([]Book, error) {
 }
 
 const (
-	booksDeleteDDL = `drop table if exists books;`
+	booksDropDDL   = `drop table if exists books;`
 	booksCreateDDL = `create table books(
 		id serial primary key,
 		ISBN varchar(50) unique not null,
 		title varchar(100) not null,
 		published_on timestamp not null
 	);`
-	bookInsertDDL = `insert into books (ISBN, title, published_on) values ($1, $2, $3);`
+	booksInsertDDL = `insert into books (ISBN, title, published_on) values ($1, $2, $3);`
 )
 
 // Migrate migrates the database.
