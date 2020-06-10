@@ -105,41 +105,66 @@ func (b *Books) List(ctx context.Context) ([]Book, error) {
 }
 
 const (
-	booksDeleteDDL = `drop table if exists books;`
+	booksDropDDL   = `drop table if exists books;`
 	booksCreateDDL = `create table books(
 		id serial primary key,
 		ISBN varchar(50) unique not null,
 		title varchar(100) not null,
 		published_on timestamp not null
 	);`
-	booksIndexDDL = `create index title_idx on books(title);`
-	bookInsertDDL = `insert into books (ISBN, title, published_on) values ($1, $2, $3);`
+	booksIndexDDL  = `create index title_idx on books(title);`
+	booksInsertDDL = `insert into books (ISBN, title, published_on) values ($1, $2, $3);`
 )
 
 // Migrate migrates the database.
-func (b *Books) Migrate(ctx context.Context) error {
+func (b *Books) Migrate(ctx context.Context) (err error) {
 	log.Debug().Msgf("Migrating Book...")
-	if _, err := b.db.ExecContext(ctx, booksDeleteDDL); err != nil {
+	txn, err := b.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
+	if err != nil {
 		return err
 	}
-	if _, err := b.db.ExecContext(ctx, booksCreateDDL); err != nil {
+	defer func() {
+		if err == nil {
+			if err = txn.Commit(); err != nil {
+				log.Error().Err(err).Msg("books commit failed")
+			}
+			return
+		}
+		log.Error().Err(err).Msg("books migration failed")
+		err = txn.Rollback()
+	}()
+
+	if _, err = b.db.ExecContext(ctx, booksDropDDL); err != nil {
+		return
+	}
+	if _, err = b.db.ExecContext(ctx, booksCreateDDL); err != nil {
+		return
+	}
+	if _, err = b.db.ExecContext(ctx, booksIndexDDL); err != nil {
+		return
+	}
+
+	insertStmt, err := b.db.PrepareContext(ctx, booksInsertDDL)
+	if err != nil {
 		return err
 	}
-	if _, err := b.db.ExecContext(ctx, booksIndexDDL); err != nil {
-		return err
-	}
+	defer func() {
+		if err = insertStmt.Close(); err != nil {
+			return
+		}
+	}()
 
 	for i := 0; i < 10; i++ {
 		title := fmt.Sprintf("Rango%d", i)
-		_, err := b.db.ExecContext(ctx, bookInsertDDL,
+		if _, err = insertStmt.ExecContext(
+			ctx,
 			fmt.Sprintf("%x", sha1.Sum([]byte(title))),
 			title,
 			time.Now(),
-		)
-		if err != nil {
-			return err
+		); err != nil {
+			return
 		}
 	}
 
-	return nil
+	return
 }

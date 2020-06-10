@@ -15,21 +15,31 @@ const (
 	dataSourceFmt = "user=%s password=%s host=%s port=%s dbname=%s sslmode=disable"
 )
 
+// DialOpts tracks connection configuration.
 type DialOpts struct {
 	User, Password string
 	Host, Port     string
 	DbName         string
 }
 
-func Dial(opts DialOpts) (*sql.DB, error) {
-	ds := fmt.Sprintf(dataSourceFmt,
-		opts.User,
-		opts.Password,
-		opts.Host,
-		opts.Port,
-		opts.DbName,
-	)
-	log.Debug().Msgf("DB Connected %s:%s db:%s", opts.Host, opts.Port, opts.DbName)
+// String returns connection info
+func (d DialOpts) String() string {
+	return fmt.Sprintf("%s:%s db:%s", d.Host, d.Port, d.DbName)
+}
 
-	return sql.Open(pgDriver, ds)
+// Flatten returns a datasource string.
+func (d DialOpts) Flatten() string {
+	return fmt.Sprintf(dataSourceFmt,
+		d.User,
+		d.Password,
+		d.Host,
+		d.Port,
+		d.DbName,
+	)
+}
+
+// Dial dials in the connection.
+func Dial(opts DialOpts) (*sql.DB, error) {
+	log.Debug().Msgf("DB Connecting... %v", opts)
+	return sql.Open(pgDriver, opts.Flatten())
 }

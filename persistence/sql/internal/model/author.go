@@ -58,7 +58,7 @@ func (a *Authors) List(ctx context.Context) ([]Author, error) {
 }
 
 const (
-	authorsDeleteDDL = `drop table if exists authors;`
+	authorsDropDDL   = `drop table if exists authors;`
 	authorsCreateDDL = `create table authors(
 		id serial primary key,
 		first_name varchar(30) not null,
@@ -70,16 +70,31 @@ const (
 )
 
 // Migrate migrates the database.
-func (a *Authors) Migrate(ctx context.Context) error {
+func (a *Authors) Migrate(ctx context.Context) (err error) {
 	log.Debug().Msgf("Migrating Authors...")
-	if _, err := a.db.ExecContext(ctx, authorsDeleteDDL); err != nil {
+	txn, err := a.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
+	if err != nil {
 		return err
 	}
-	if _, err := a.db.ExecContext(ctx, authorsCreateDDL); err != nil {
-		return err
+	defer func() {
+		if err == nil {
+			if err = txn.Commit(); err != nil {
+				log.Error().Err(err).Msg("author commit failed")
+			}
+			return
+		}
+		log.Error().Err(err).Msg("author migration failed")
+		err = txn.Rollback()
+	}()
+
+	if _, err = a.db.ExecContext(ctx, authorsDropDDL); err != nil {
+		return
 	}
-	if _, err := a.db.ExecContext(ctx, authorsIndexDDL); err != nil {
-		return err
+	if _, err = a.db.ExecContext(ctx, authorsCreateDDL); err != nil {
+		return
+	}
+	if _, err = a.db.ExecContext(ctx, authorsIndexDDL); err != nil {
+		return
 	}
 
 	insertStmt, err := a.db.PrepareContext(ctx, authorsInsertDDL)
@@ -87,21 +102,21 @@ func (a *Authors) Migrate(ctx context.Context) error {
 		return err
 	}
 	defer func() {
-		if err := insertStmt.Close(); err != nil {
-			log.Error().Err(err).Msgf("closing insert stmt")
+		if err = insertStmt.Close(); err != nil {
+			return
 		}
 	}()
 
 	for i := 0; i < 10; i++ {
-		_, err = insertStmt.ExecContext(ctx,
+		if _, err = insertStmt.ExecContext(
+			ctx,
 			"Fernand",
 			fmt.Sprintf("Galiana%d", i),
 			20+rand.Int31n(80),
-		)
-		if err != nil {
-			return err
+		); err != nil {
+			return
 		}
 	}
 
-	return nil
+	return
 }
