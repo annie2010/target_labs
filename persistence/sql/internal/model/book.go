@@ -13,6 +13,15 @@ import (
 	"github.com/rs/zerolog/log"
 )
 
+// Select books by author last name query.
+const byAuthor = `select * from books b
+	where b.id in (
+		select book_id from books_authors where author_id in (
+			select id from authors a where a.last_name=$1
+		)
+	);
+`
+
 // Book represents a book.
 type Book struct {
 	ID          int       `json:"id"`
@@ -32,76 +41,14 @@ func NewBooks(db *sql.DB) *Books {
 	return &Books{db: db}
 }
 
-func (b *Books) init(ctx context.Context) (err error) {
-	if b.byAuthorStmt != nil {
-		return err
-	}
-
-	const byAuthor = `select * from books b
-	  where b.id in (
-			select book_id from books_authors where author_id in (
-				select id from authors a where a.last_name=$1
-			)
-		);
-	`
-	b.byAuthorStmt, err = b.db.PrepareContext(ctx, byAuthor)
-	return
-}
-
+// ByAuthor finds all books by a given author last name.
 func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
-	if err := b.init(ctx); err != nil {
-		return nil, err
-	}
-	rows, err := b.byAuthorStmt.QueryContext(ctx, last)
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if err := rows.Close(); err != nil {
-			log.Error().Err(err).Msgf("closing author rows")
-		}
-	}()
-
-	bb := make([]Book, 0, 10)
-	for rows.Next() {
-		var b Book
-		if err = rows.Scan(&b.ID, &b.ISBN, &b.Title, &b.PublishedOn); err != nil {
-			return nil, err
-		}
-		bb = append(bb, b)
-	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return bb, nil
+	<<!!YOUR_CODE!!>> -- retrieve all books by the given author (hint: checkout byAuthor const above )
 }
 
 // Index retrieves all books.
 func (b *Books) List(ctx context.Context) ([]Book, error) {
-	rows, err := b.db.QueryContext(ctx, "select * from books")
-	if err != nil || rows.Err() != nil {
-		return nil, err
-	}
-	defer func() {
-		if err := rows.Close(); err != nil {
-			log.Error().Err(err).Msgf("closing book rows")
-		}
-	}()
-
-	bb := make([]Book, 10)
-	for rows.Next() {
-		var b Book
-		if err = rows.Scan(&b.ID, &b.ISBN, &b.Title, &b.PublishedOn); err != nil {
-			return nil, err
-		}
-		bb = append(bb, b)
-	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return bb, nil
+	<<!!YOUR_CODE!!>> -- retrieve books from database
 }
 
 const (
@@ -112,7 +59,6 @@ const (
 		title varchar(100) not null,
 		published_on timestamp not null
 	);`
-	booksIndexDDL = `create index title_idx on books(title);`
 	bookInsertDDL = `insert into books (ISBN, title, published_on) values ($1, $2, $3);`
 )
 
@@ -123,9 +69,6 @@ func (b *Books) Migrate(ctx context.Context) error {
 		return err
 	}
 	if _, err := b.db.ExecContext(ctx, booksCreateDDL); err != nil {
-		return err
-	}
-	if _, err := b.db.ExecContext(ctx, booksIndexDDL); err != nil {
 		return err
 	}
 

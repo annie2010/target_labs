@@ -6,8 +6,6 @@ package pg
 import (
 	"database/sql"
 	"fmt"
-
-	"github.com/rs/zerolog/log"
 )
 
 const (
@@ -15,21 +13,19 @@ const (
 	dataSourceFmt = "user=%s password=%s host=%s port=%s dbname=%s sslmode=disable"
 )
 
+// DialOpts tracks db connection options.
 type DialOpts struct {
 	User, Password string
 	Host, Port     string
 	DbName         string
 }
 
-func Dial(opts DialOpts) (*sql.DB, error) {
-	ds := fmt.Sprintf(dataSourceFmt,
-		opts.User,
-		opts.Password,
-		opts.Host,
-		opts.Port,
-		opts.DbName,
-	)
-	log.Debug().Msgf("DB Connected %s:%s db:%s", opts.Host, opts.Port, opts.DbName)
+// String flattens to data source
+func (d DialOpts) String() string {
+	<!!YOUR_CODE!!> -- return a postgres connection string
+}
 
-	return sql.Open(pgDriver, ds)
+// Dial configures the DB connection.
+func Dial(opts DialOpts) (*sql.DB, error) {
+	return sql.Open(pgDriver, opts.String())
 }

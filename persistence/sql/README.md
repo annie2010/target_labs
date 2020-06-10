@@ -27,10 +27,11 @@
 7. In internal/model/book.go:
    1. Implement the method to retrieve all books
    2. Implement the method ByAuthor to retrieve a list of books given an author last name.
-7. Run your web service and ensure all endpoints are working nominally
-8. Ensure all tests are passing!
-9. Terminate your service and your postgres container
-10. BONUS: Note the response times given by the request logger.
+8. Run your web service and ensure all endpoints are working nominally
+9. Ensure all tests are passing!
+10. Terminate your service and your postgres container
+11. BONUS!! Leverage a prepared statement to handle /api/v1/books/author_name queries!
+12. BONUS!! Note the response times given by the request logger.
     What can you do to improve your service performance?
 
 ## Commands

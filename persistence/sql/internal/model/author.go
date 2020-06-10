@@ -32,29 +32,7 @@ func NewAuthors(db *sql.DB) *Authors {
 
 // Index retrieves all Authors.
 func (a *Authors) List(ctx context.Context) ([]Author, error) {
-	rows, err := a.db.QueryContext(ctx, "select * from authors")
-	if err != nil {
-		return nil, err
-	}
-	defer func() {
-		if err := rows.Close(); err != nil {
-			log.Error().Err(err).Msgf("closing book rows")
-		}
-	}()
-
-	aa := make([]Author, 0, 10)
-	for rows.Next() {
-		var a Author
-		if err = rows.Scan(&a.ID, &a.FirstName, &a.LastName, &a.Age); err != nil {
-			return nil, err
-		}
-		aa = append(aa, a)
-	}
-	if err = rows.Err(); err != nil {
-		return nil, err
-	}
-
-	return aa, nil
+	<!!YOUR_CODE!!> -- retrieve authors from the database.
 }
 
 const (
@@ -65,7 +43,6 @@ const (
 		last_name varchar(30) not null,
 		age int not null
 	);`
-	authorsIndexDDL  = `create index last_idx on authors(last_name);`
 	authorsInsertDDL = `insert into authors (first_name, last_name, age) values ($1, $2, $3);`
 )
 
@@ -76,9 +53,6 @@ func (a *Authors) Migrate(ctx context.Context) error {
 		return err
 	}
 	if _, err := a.db.ExecContext(ctx, authorsCreateDDL); err != nil {
-		return err
-	}
-	if _, err := a.db.ExecContext(ctx, authorsIndexDDL); err != nil {
 		return err
 	}
 

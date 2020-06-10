@@ -104,11 +104,7 @@ func migrate(ctx context.Context, db *sql.DB) (*model.Authors, *model.Books, err
 
 func mustInitDB(ctx context.Context) *sql.DB {
 	opts := pg.DialOpts{
-		User:     os.Getenv("PG_USER"),
-		Password: os.Getenv("PG_PWD"),
-		Host:     os.Getenv("PG_HOST"),
-		Port:     os.Getenv("PG_PORT"),
-		DbName:   os.Getenv("PG_DB"),
+		<!!YOUR_CODE!!> -- define connection options
 	}
 	db, err := pg.Dial(opts)
 	if err != nil {

@@ -43,12 +43,6 @@ func (ba BooksAuthors) Migrate(ctx context.Context) error {
 	if _, err := ba.db.ExecContext(ctx, baCreateDDL); err != nil {
 		return err
 	}
-	if _, err := ba.db.ExecContext(ctx, `create index book_idx on books_authors(book_id);`); err != nil {
-		return err
-	}
-	if _, err := ba.db.ExecContext(ctx, `create index author_idx on books_authors(author_id);`); err != nil {
-		return err
-	}
 
 	insertStmt, err := ba.db.PrepareContext(ctx, baInsertDDL)
 	if err != nil {
