@@ -5,7 +5,6 @@ package pg
 
 import (
 	"database/sql"
-	"fmt"
 )
 
 const (
@@ -22,7 +21,7 @@ type DialOpts struct {
 
 // String flattens to data source
 func (d DialOpts) String() string {
-	<!!YOUR_CODE!!> -- return a postgres connection string
+	<<!!YOUR_CODE!!>> -- return a postgres connection string
 }
 
 // Dial configures the DB connection.
