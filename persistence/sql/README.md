@@ -47,7 +47,7 @@ docker run --rm --name pg -p 5432:5432 -e POSTGRES_PASSWORD=YOUR_PASSWORD -e POS
 docker exec -it --rm pg psql -U postgres -W -d YOUR_DB_NAME
 ```
 
-### Postgres CheatSheet
+### Postgres CLI Survival Cheats
 
 ```shell
 # Exit
