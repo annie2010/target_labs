@@ -4,13 +4,14 @@
 <br/>
 <br/>
 
-# Persistence SQL Lab
+# GORM Lab
 
 ---
 ## <img src="../../assets/lab.png" width="auto" height="32"/> Your Mission
 
 > Barnes And Noble RELOADED!
-> Leveraging GORM rework your model queries for all your service endpoints.
+
+> Leveraging GORM, rework your model queries for all your service endpoints.
 > Standing on the shoulders of giants?
 
 > The web service should surface the following endpoints:
