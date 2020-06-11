@@ -50,7 +50,6 @@ func FibHandlerIter(w http.ResponseWriter, r *http.Request) {
 	}
 
 	res := make(Results, 0, n)
-	_ = res
 	for i := 0; i <= int(n); i++ {
 		res = append(res, Result{Number: i, Fibonacci: fib.ComputeIter(i)})
 	}

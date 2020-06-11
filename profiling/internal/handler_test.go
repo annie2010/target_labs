@@ -15,14 +15,13 @@ func TestFibHandler(t *testing.T) {
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
-
 	internal.FibHandler(rr, r)
 	assert.Equal(t, http.StatusOK, rr.Code)
 
 	var res internal.Results
 	err := json.NewDecoder(rr.Body).Decode(&res)
 	assert.Nil(t, err)
-	assert.Equal(t, 4, len(res))
+	assert.Equal(t, 21, len(res))
 	for i, f := range []int{0, 1, 1, 2} {
 		assert.Equal(t, f, res[i].Fibonacci)
 	}
@@ -33,14 +32,13 @@ func TestFibHandlerIter(t *testing.T) {
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
-
 	internal.FibHandlerIter(rr, r)
 	assert.Equal(t, http.StatusOK, rr.Code)
 
 	var res internal.Results
 	err := json.NewDecoder(rr.Body).Decode(&res)
 	assert.Nil(t, err)
-	assert.Equal(t, 4, len(res))
+	assert.Equal(t, 21, len(res))
 	for i, f := range []int{0, 1, 1, 2} {
 		assert.Equal(t, f, res[i].Fibonacci)
 	}
@@ -51,7 +49,6 @@ func BenchmarkFibHandler(b *testing.B) {
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
-
 	b.ReportAllocs()
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
@@ -64,7 +61,6 @@ func BenchmarkFibHandlerIter(b *testing.B) {
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
-
 	b.ReportAllocs()
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
