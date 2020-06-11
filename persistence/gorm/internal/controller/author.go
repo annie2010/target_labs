@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/gopherland/db/internal/model"
+	"github.com/gopherland/target_labs/gorm/internal/model"
 )
 
 const defaultTimeout = 5 * time.Second

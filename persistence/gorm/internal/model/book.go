@@ -29,26 +29,17 @@ func NewBooks(db *gorm.DB) *Books {
 	return &Books{db: db}
 }
 
+// ByAuthor fetch a books from the given author last name.
 func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
-	var bb []Book
-	b.db.Where("id in ?",
-		b.db.Table("books_authors").Unscoped().Select("book_id").
-			Where("author_id in ?",
-				b.db.Table("authors").Select("id").Where("last_name = ?", last).SubQuery(),
-			).SubQuery(),
-	).Find(&bb)
-
-	return bb, b.db.Error
+	<<!!YOUR_CODE!!>> -- fetch all books from the given author
 }
 
 // Index retrieves all books.
 func (b *Books) List(ctx context.Context) ([]Book, error) {
-	var bb []Book
-	b.db.Find(&bb)
-
-	return bb, b.db.Error
+	<<!!YOUR_CODE!!>> -- fetch all books from DB
 }
 
+// Seed seeds the table.
 func (b *Books) Seed() error {
 	for i := 1; i <= 10; i++ {
 		title := fmt.Sprintf("Rango%d", i)

@@ -30,12 +30,10 @@ func NewAuthors(db *gorm.DB) *Authors {
 
 // Index retrieves all Authors.
 func (a *Authors) List(ctx context.Context) ([]Author, error) {
-	var aa []Author
-	a.db.Find(&aa)
-
-	return aa, a.db.Error
+	<<!!YOUR_CODE!!>> -- fetch all authors from DB
 }
 
+// Seed seeds the table.
 func (a *Authors) Seed() error {
 	for i := 1; i <= 10; i++ {
 		a.db.Create(&Author{

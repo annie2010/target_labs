@@ -9,9 +9,10 @@ import (
 	"testing"
 	"time"
 
-	"github.com/gopherland/db/internal/controller"
-	"github.com/gopherland/db/internal/model"
+	"github.com/gopherland/target_labs/gorm/internal/controller"
+	"github.com/gopherland/target_labs/gorm/internal/model"
 	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -61,7 +62,9 @@ func (m mockBook) List(context.Context) ([]model.Book, error) {
 	aa := make([]model.Book, 0, 10)
 	for i := 0; i < 10; i++ {
 		aa = append(aa, model.Book{
-			ID:          i,
+			Model: gorm.Model{
+				ID: uint(i),
+			},
 			ISBN:        strconv.Itoa(i),
 			Title:       "Doh" + strconv.Itoa(i),
 			PublishedOn: time.Now(),
@@ -75,7 +78,9 @@ func (m mockBook) ByAuthor(context.Context, string) ([]model.Book, error) {
 	aa := make([]model.Book, 0, 10)
 	for i := 0; i < 1; i++ {
 		aa = append(aa, model.Book{
-			ID:          i,
+			Model: gorm.Model{
+				ID: uint(i),
+			},
 			ISBN:        strconv.Itoa(i),
 			Title:       "Doh" + strconv.Itoa(i),
 			PublishedOn: time.Now(),
