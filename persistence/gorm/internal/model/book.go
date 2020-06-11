@@ -29,6 +29,7 @@ func NewBooks(db *gorm.DB) *Books {
 	return &Books{db: db}
 }
 
+// ByAuthor returns books from a given author.
 func (b *Books) ByAuthor(_ context.Context, last string) ([]Book, error) {
 	var bb []Book
 	b.db.Where("id in ?",
