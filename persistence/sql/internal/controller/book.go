@@ -8,7 +8,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/gopherland/db/internal/model"
+	"github.com/gopherland/target_labs/sql/internal/model"
 	"github.com/gorilla/mux"
 )
 
