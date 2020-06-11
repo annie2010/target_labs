@@ -27,7 +27,7 @@ var uu = []struct {
 	{10, 55},
 }
 
-func TestCompute(t *testing.T) {
+func TestComputeRec(t *testing.T) {
 	for _, u := range uu {
 		assert.Equal(t, u.e, fib.Compute(u.n))
 	}
@@ -39,7 +39,7 @@ func TestComputeIter(t *testing.T) {
 	}
 }
 
-func BenchmarkCompute(b *testing.B) {
+func BenchmarkComputeRec(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		fib.Compute(20)
 	}
