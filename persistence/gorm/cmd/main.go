@@ -62,8 +62,6 @@ func main() {
 }
 
 func migrate(db *gorm.DB) (*model.Authors, *model.Books, error) {
-	db.LogMode(true)
-
 	db.DropTableIfExists(&model.BookAuthor{})
 	var author model.Author
 	db.DropTableIfExists(&author)
