@@ -1,51 +1,70 @@
-# Database
+<img src="../../assets/gophernand.png" align="right" width="128" height="auto"/>
+
+<br/>
+<br/>
+<br/>
+
+# Persistence SQL Lab
+
+---
+## <img src="../../assets/lab.png" width="auto" height="32"/> Your Mission
+
+> Barnes And Noble RELOADED!
+> Leveraging GORM rework your model queries for all your service endpoints.
+> Standing on the shoulders of giants?
+
+> The web service should surface the following endpoints:
+>  * /api/v1/books -- lists out all books
+>  * /api/v1/authors -- lists out all authors
+>  * /api/v1/books/author_name -- list out all books from the given author last name
+
+1. Clone the [labs repo](https://github.com/gopherland/target_labs)
+2. Cd persistent/gorm
+3. The service migration and seeding are already implemented for you
+4. Using the provided command below deploy a postgres container on your Docker instance. Be sure to note your connection details!
+5. In internal/pg/dial.go implement the necessary logic to connect to your postgres containerized instance
+6. In internal/model/author.go implement the method to list all authors
+7. In internal/model/book.go:
+   1. Implement the method to retrieve all books
+   2. Implement the method ByAuthor to retrieve a list of books given an author last name.
+8. Run your web service and ensure all endpoints are working nominally
+9. Terminate your service and your postgres container
+
+## Commands
+
+### Run PostgresSQL via Docker
 
 ```shell
-# Install client
-brew install mysql
-dkcrm && dkirm
-# Run
-docker run --name mysql \
-  -p 3333:3306 \
-  -e MYSQL_ROOT_PASSWORD=bozo \
-  -d mysql:8.0.20
-
-# Exec
-docker exec -it --rm mysql mysql -uroot -p
-# Kill
-docker kill mysql
+docker run --rm --name pg -p 5432:5432 -e POSTGRES_PASSWORD=YOUR_PASSWORD -e POSTGRES_DB=YOUR_DB_NAME -d postgres@12.3
 ```
 
-## MYSQL Commands
+### Run psql CLI in container
 
 ```shell
-mysql -uroot -pbozo -h127.0.0.1 -P3333
-mysql -uroot -pbozo -h$(minikube ip) -P3333
-show databases;
-show tables;
-use fred_db;
+docker exec -it --rm pg psql -U postgres -W -d YOUR_DB_NAME
 ```
 
-## PostGres
+### Postgres CLI Survival Cheats
 
 ```shell
-docker run --rm --name pg -p 5432:5432 -e POSTGRES_PASSWORD=b0z0 -e POSTGRES_DB=books -d postgres
-docker ps
-docker kill pg
-
-brew reinstall postgresql
-psql -U postgres -W -h $(minikube ip) -p 5432 books
-```
-
-### PG Commands
-
-```shell
-# List all dbs
+# Exit
+\q
+# List all databases
 \l
-# Use db
-\c
-# Show tables
+# Use a given db fred
+\c fred
+# List all tables
 \d
-# Query perf
-explain select * from books where title='Rango';
+# Show table fred info
+\d fred
+# create a database
+create database blee;
+# select
+select * from fred;
+# Check query planner
+explain select * from fred;
 ```
+
+---
+<img src="../../assets/imhotep_logo.png" width="32" height="auto"/> © 2020 Imhotep Software LLC.
+All materials licensed under [Apache v2.0](http://www.apache.org/licenses/LICENSE-2.0)
