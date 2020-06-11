@@ -27,6 +27,7 @@ func init() {
 
 func main() {
 	db := mustInitDB()
+	db.LogMode(true)
 	defer terminate(db)
 	trap(db)
 
