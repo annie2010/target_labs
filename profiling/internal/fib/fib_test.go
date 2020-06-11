@@ -39,7 +39,7 @@ func TestComputeIter(t *testing.T) {
 	}
 }
 
-func BenchmarkComputeRec(b *testing.B) {
+func BenchmarkCompute(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		fib.Compute(20)
 	}
