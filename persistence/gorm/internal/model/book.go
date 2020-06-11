@@ -29,7 +29,7 @@ func NewBooks(db *gorm.DB) *Books {
 	return &Books{db: db}
 }
 
-func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
+func (b *Books) ByAuthor(_ context.Context, last string) ([]Book, error) {
 	var bb []Book
 	b.db.Where("id in ?",
 		b.db.Table("books_authors").Unscoped().Select("book_id").
@@ -42,13 +42,14 @@ func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
 }
 
 // Index retrieves all books.
-func (b *Books) List(ctx context.Context) ([]Book, error) {
+func (b *Books) List(context.Context) ([]Book, error) {
 	var bb []Book
 	b.db.Find(&bb)
 
 	return bb, b.db.Error
 }
 
+// Seed seeds the table with fake recs.
 func (b *Books) Seed() error {
 	for i := 1; i <= 10; i++ {
 		title := fmt.Sprintf("Rango%d", i)

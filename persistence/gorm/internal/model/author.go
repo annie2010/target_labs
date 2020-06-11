@@ -29,13 +29,14 @@ func NewAuthors(db *gorm.DB) *Authors {
 }
 
 // Index retrieves all Authors.
-func (a *Authors) List(ctx context.Context) ([]Author, error) {
+func (a *Authors) List(context.Context) ([]Author, error) {
 	var aa []Author
 	a.db.Find(&aa)
 
 	return aa, a.db.Error
 }
 
+// Seed seeds the table with fake recs.
 func (a *Authors) Seed() error {
 	for i := 1; i <= 10; i++ {
 		a.db.Create(&Author{

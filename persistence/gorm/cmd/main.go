@@ -6,9 +6,9 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/gopherland/db/internal/controller"
-	"github.com/gopherland/db/internal/model"
-	"github.com/gopherland/db/internal/pg"
+	"github.com/gopherland/target_labs/gorm/internal/controller"
+	"github.com/gopherland/target_labs/gorm/internal/model"
+	"github.com/gopherland/target_labs/gorm/internal/pg"
 	"github.com/gorilla/mux"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"

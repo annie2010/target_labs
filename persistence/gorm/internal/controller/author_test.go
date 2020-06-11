@@ -9,9 +9,10 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/gopherland/db/internal/controller"
-	"github.com/gopherland/db/internal/model"
+	"github.com/gopherland/target_labs/gorm/internal/controller"
+	"github.com/gopherland/target_labs/gorm/internal/model"
 	"github.com/gorilla/mux"
+	"github.com/jinzhu/gorm"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -42,7 +43,9 @@ func (m mockAuthor) List(context.Context) ([]model.Author, error) {
 	aa := make([]model.Author, 0, 10)
 	for i := 0; i < 10; i++ {
 		aa = append(aa, model.Author{
-			ID:        i,
+			Model: gorm.Model{
+				ID: uint(i),
+			},
 			FirstName: "Blee",
 			LastName:  "Doh" + strconv.Itoa(i),
 			Age:       int(rand.Int31n(80)),
