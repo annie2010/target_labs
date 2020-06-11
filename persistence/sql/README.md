@@ -60,6 +60,10 @@ docker exec -it --rm pg psql -U postgres -W -d YOUR_DB_NAME
 \d
 # Show table fred info
 \d fred
+# create a database
+create database blee;
+# select
+select * from fred;
 # Check query planner
 explain select * from fred;
 ```
