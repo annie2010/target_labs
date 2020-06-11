@@ -12,21 +12,31 @@ const (
 	dataSourceFmt = "user=%s password=%s host=%s port=%s dbname=%s sslmode=disable"
 )
 
+// DialOpts represents db connection config.
 type DialOpts struct {
 	User, Password string
 	Host, Port     string
 	DbName         string
 }
 
-func Dial(opts DialOpts) (*gorm.DB, error) {
-	ds := fmt.Sprintf(dataSourceFmt,
-		opts.User,
-		opts.Password,
-		opts.Host,
-		opts.Port,
-		opts.DbName,
-	)
-	log.Debug().Msgf("DB Connected %s:%s db:%s", opts.Host, opts.Port, opts.DbName)
+// String dumps as string.
+func (d DialOpts) String() string {
+	return fmt.Sprintf("%s:%s db:%s", d.Host, d.Port, d.DbName)
+}
 
-	return gorm.Open(pgDriver, ds)
+func (d DialOpts) flatten() string {
+	return fmt.Sprintf(dataSourceFmt,
+		d.User,
+		d.Password,
+		d.Host,
+		d.Port,
+		d.DbName,
+	)
+}
+
+// Dial dials the connection.
+func Dial(opts DialOpts) (*gorm.DB, error) {
+	log.Debug().Msgf("DB Connecting %s", opts)
+
+	return gorm.Open(pgDriver, opts.flatten())
 }
