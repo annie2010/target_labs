@@ -12,8 +12,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/gopherland/db/internal/controller"
-	"github.com/gopherland/db/internal/model"
+	"github.com/gopherland/target_labs/sql/internal/controller"
+	"github.com/gopherland/target_labs/sql/internal/model"
 	"github.com/gorilla/mux"
 	"github.com/stretchr/testify/assert"
 )

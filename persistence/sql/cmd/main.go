@@ -12,9 +12,9 @@ import (
 	"os/signal"
 	"time"
 
-	"github.com/gopherland/db/internal/controller"
-	"github.com/gopherland/db/internal/model"
-	"github.com/gopherland/db/internal/pg"
+	"github.com/gopherland/target_labs/sql/internal/controller"
+	"github.com/gopherland/target_labs/sql/internal/model"
+	"github.com/gopherland/target_labs/sql/internal/pg"
 	"github.com/gorilla/mux"
 	_ "github.com/lib/pq"
 	"github.com/rs/zerolog"

@@ -1,4 +1,4 @@
-module github.com/gopherland/db
+module github.com/gopherland/target_labs/sql
 
 go 1.14
 
