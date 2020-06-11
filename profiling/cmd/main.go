@@ -7,7 +7,7 @@ package main
 import (
 	"log"
 	"net/http"
-	_ "net/http/pprof"
+	<<!!YOUR_CODE!!>> -- make sure pprof is available
 
 	"github.com/gopherland/labs2/profiling/internal"
 )
@@ -15,9 +15,8 @@ import (
 const httpPort = ":4500"
 
 func main() {
-	http.HandleFunc("/fibr", internal.FibHandler)
-	http.HandleFunc("/fibi", internal.FibHandlerIter)
-
 	log.Printf("[Fib] service is listening on [%s]", httpPort)
+
+	http.HandleFunc("/fib", internal.FibHandler)
 	log.Fatal(http.ListenAndServe(httpPort, nil))
 }

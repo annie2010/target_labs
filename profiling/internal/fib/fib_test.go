@@ -33,11 +33,8 @@ func TestCompute(t *testing.T) {
 	}
 }
 
-func TestComputeIter(t *testing.T) {
-	for _, u := range uu {
-		assert.Equal(t, u.e, fib.ComputeIter(u.n))
-	}
-}
+<<!!YOUR_CODE!!>> -- Ensure your new Implementation produces the same results!
+
 
 func BenchmarkCompute(b *testing.B) {
 	for i := 0; i < b.N; i++ {
@@ -45,8 +42,4 @@ func BenchmarkCompute(b *testing.B) {
 	}
 }
 
-func BenchmarkComputeIter(b *testing.B) {
-	for i := 0; i < b.N; i++ {
-		fib.ComputeIter(20)
-	}
-}
+<<!!YOUR_CODE!!>> -- Benchmark your new implementation!
