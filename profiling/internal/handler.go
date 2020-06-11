@@ -27,7 +27,7 @@ func FibHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := make(Results, 0, n)
+	var res Results
 	for i := 0; i <= n; i++ {
 		res = append(res, Result{Number: i, Fibonacci: fib.Compute(i)})
 	}
@@ -43,14 +43,15 @@ func FibHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func FibHandlerIter(w http.ResponseWriter, r *http.Request) {
-	n, err := strconv.Atoi(r.URL.Query().Get("n"))
+	n, err := strconv.ParseInt(r.FormValue("n"), 10, 64)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusExpectationFailed)
 		return
 	}
 
 	res := make(Results, 0, n)
-	for i := 0; i <= n; i++ {
+	_ = res
+	for i := 0; i <= int(n); i++ {
 		res = append(res, Result{Number: i, Fibonacci: fib.ComputeIter(i)})
 	}
 	buff, err := json.Marshal(&res)

@@ -15,7 +15,9 @@ import (
 const httpPort = ":4500"
 
 func main() {
-	http.HandleFunc("/fib", internal.FibHandler)
+	http.HandleFunc("/fibr", internal.FibHandler)
+	http.HandleFunc("/fibi", internal.FibHandlerIter)
+
 	log.Printf("[Fib] service is listening on [%s]", httpPort)
 	log.Fatal(http.ListenAndServe(httpPort, nil))
 }

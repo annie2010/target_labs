@@ -13,7 +13,7 @@ import (
 func TestFibHandler(t *testing.T) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
 
 	internal.FibHandler(rr, r)
@@ -31,7 +31,7 @@ func TestFibHandler(t *testing.T) {
 func TestFibHandlerIter(t *testing.T) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
 
 	internal.FibHandlerIter(rr, r)
@@ -49,7 +49,7 @@ func TestFibHandlerIter(t *testing.T) {
 func BenchmarkFibHandler(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
 
 	b.ReportAllocs()
@@ -62,7 +62,7 @@ func BenchmarkFibHandler(b *testing.B) {
 func BenchmarkFibHandlerIter(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
 	)
 
 	b.ReportAllocs()
