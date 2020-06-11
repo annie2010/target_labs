@@ -4,7 +4,7 @@
 <br/>
 <br/>
 
-# Persistence SQL Lab
+# Persistence GORM Lab
 
 ---
 ## <img src="../../assets/lab.png" width="auto" height="32"/> Your Mission
