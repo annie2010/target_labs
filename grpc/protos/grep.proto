@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+option go_package = "internal/generated";
+
+package grep;
+
+// Grepper represents a book grep service.
+service Grepper {
+  // Grep returns the number of occurrences of a given word in a book.
+  rpc Grep (BookInfo) returns (Occurrences) {}
+}
+
+message BookInfo {
+  string book = 1;
+  string word = 2;
+}
+
+message Occurrences {
+  string book = 1;
+  string word = 2;
+  int64  total = 3;
+}
