@@ -47,7 +47,7 @@ func TestFibHandlerIter(t *testing.T) {
 func BenchmarkFibHandler(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
 	)
 	b.ReportAllocs()
 	b.ResetTimer()
@@ -59,7 +59,7 @@ func BenchmarkFibHandler(b *testing.B) {
 func BenchmarkFibHandlerIter(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/fib?n=20", nil)
+		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
 	)
 	b.ReportAllocs()
 	b.ResetTimer()

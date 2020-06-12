@@ -10,11 +10,14 @@ import (
 	_ "net/http/pprof"
 
 	"github.com/gopherland/labs2/profiling/internal"
+	"github.com/pkg/profile"
 )
 
 const httpPort = ":4500"
 
 func main() {
+	defer profile.Start(profile.ThreadcreationProfile).Stop()
+
 	http.HandleFunc("/fibr", internal.FibHandler)
 	http.HandleFunc("/fibi", internal.FibHandlerIter)
 
