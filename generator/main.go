@@ -9,10 +9,10 @@ import (
 	"log"
 
 	"github.com/gookit/color"
-	"github.com/gopherland/target_labs/generator/stacks"
+	<<!!YOUR_CODE!!>> -- set up your stacks import
 )
 
-//go:generate stacker -t float64,int32
+<<!!YOUR_CODE!!>> Setup your generate annotation for float64 and int32
 func main() {
 	fmt.Print("\033[H\033[2J")
 
