@@ -1,0 +1,12 @@
+# Copyright 2020 Imhotep Software
+# All material is licensed under the Apache License Version 2.0
+# http://www.apache.org/licenses/LICENSE-2.0
+
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: hangman
+    static_configs:
+      - targets: ["localhost:5000"]
