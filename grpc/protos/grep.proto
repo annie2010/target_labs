@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option go_package = "internal/generated";
+
+package grep;
+
+// Grepper represents a book grep service.
+service Grepper {
+  <<!!YOUR_CODE!!>> -- Define your service API
+}
+
+<<!!YOUR_CODE!!>> -- Define a BookInfo request it must define 2 fields: book and word
+
+<<!!YOUR_CODE!!>> -- Define Occurrences response it must define 3 fields: book, word and total
