@@ -11,54 +11,27 @@ import (
 
 // Metrics represents Prometheus exposed metrics.
 type Metrics struct {
-	good, bad prometheus.Counter
-	tally     prometheus.Gauge
+	<<!!YOUR_CODE!!>> Declare your prom metrics to track good/bad guesses and tally metrics
 }
 
 // NewMetrics returns a new instance.
 func NewMetrics() *Metrics {
 	return &Metrics{
-		good: promauto.NewCounter(prometheus.CounterOpts{
-			Name: "hangman_good_guess_count",
-			Help: "Counts number of good guesses",
-			ConstLabels: map[string]string{
-				"app":   "hangman",
-				"guess": "good",
-			},
-		}),
-		bad: promauto.NewCounter(prometheus.CounterOpts{
-			Name: "hangman_bad_guess_count",
-			Help: "Counts number of bad guesses",
-			ConstLabels: map[string]string{
-				"app":   "hangman",
-				"guess": "bad",
-			},
-		}),
-		tally: promauto.NewGauge(prometheus.GaugeOpts{
-			Name: "hangman_tally_total",
-			Help: "The total number of game won or lost",
-			ConstLabels: map[string]string{
-				"app": "hangman",
-			},
-		}),
+		<<!!YOUR_CODE!!>> Initialize prom counters
 	}
 }
 
 // GoodGuess increments good case counter.
 func (m *Metrics) GoodGuess() {
-	m.good.Inc()
+	<<!!YOUR_CODE!!>> Track your good guesses metrics
 }
 
 // BadGuess increments bad guess counter.
 func (m *Metrics) BadGuess() {
-	m.bad.Inc()
+	<<!!YOUR_CODE!!>> Track your bad guesses metrics
 }
 
 // UpdateTally updates tally.
-func (m *Metrics) SetGameStatus(inc bool) {
-	if inc {
-		m.tally.Inc()
-	} else {
-		m.tally.Dec()
-	}
+func (m *Metrics) SetGameStatus(won bool) {
+	<<!!YOUR_CODE!!>> Track your tally metrics if game is won or lost
 }

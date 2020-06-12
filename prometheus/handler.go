@@ -60,19 +60,8 @@ func (h *Handler) Guess(w http.ResponseWriter, r *http.Request) {
 	}
 
 	outcome := req.Game.Guess(rune(req.Guess))
-	switch outcome {
-	case GoodGuess:
-		h.scorer.GoodGuess()
-	case BadGuess:
-		h.scorer.BadGuess()
-	}
-
-	switch req.Game.Tally.Status {
-	case Won:
-		h.scorer.SetGameStatus(true)
-	case Lost:
-		h.scorer.SetGameStatus(false)
-	}
+	<<!!YOUR_CODE!!>> Track good/bad guess metrics
+	<<!!YOUR_CODE!!>> Track tally metrics
 
 	raw, err := json.Marshal(req.Game)
 	if err != nil {

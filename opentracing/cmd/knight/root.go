@@ -79,7 +79,6 @@ func meltHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	fmt.Println("YO!", resp)
 	// writes out the quest response.
 	writeResponse(spanCtx, w, resp)
 }

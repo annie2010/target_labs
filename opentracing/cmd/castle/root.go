@@ -68,15 +68,8 @@ func web(cmd *cobra.Command, args []string) {
 }
 
 func meltHandler(w http.ResponseWriter, r *http.Request) {
-	span, err := newSpanFromReq(r)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusExpectationFailed)
-		return
-	}
-	defer span.Finish()
-
-	// creates a span context so we can pass it around.
-	ctx := opentracing.ContextWithSpan(r.Context(), span)
+	<<!!YOUR_CODE!!>> -- create a new span by calling newSpanFromReq
+	<<!!YOUR_CODE!!>> Create a new context based span so we can pass it around to other functions
 
 	var q internal.Quest
 	if q, err = readQuest(ctx, r.Body); err != nil {
@@ -89,16 +82,16 @@ func meltHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}()
 
-	span.SetTag("knight", q.Knight)
 
 	log.Printf("Got melt request from %s", q.Knight)
+	<<!!YOUR_CODE!!>> -- add a span tag `knight` indicating who is trying to melt the castle
 	if !isNightKing(q.Knight) {
 		internal.WriteErrOut(ctx, w, fmt.Errorf("💣 Only the `NightKing` can melt this castle!"))
 		return
 	}
 
 	if err := writeResponse(ctx, w); err == nil {
-		span.LogKV("message", fmt.Sprintf("castle successfully melted"))
+		<<!!YOUR_CODE!!>> -- Add a span log message=castle successfully melted
 	}
 }
 
@@ -110,7 +103,7 @@ func newSpanFromReq(r *http.Request) (opentracing.Span, error) {
 	var span opentracing.Span
 
 	// Extract SpanContext from Headers.
-	spanCtx, err := opentracing.GlobalTracer().Extract(
+	spanContext, err := opentracing.GlobalTracer().Extract(
 		opentracing.HTTPHeaders,
 		opentracing.HTTPHeadersCarrier(r.Header))
 	if err != nil {
@@ -118,31 +111,25 @@ func newSpanFromReq(r *http.Request) (opentracing.Span, error) {
 	}
 
 	// Starts a child span from the passed in spanContext.
-	span, err = opentracing.StartSpan(r.URL.String(), ext.RPCServerOption(spanCtx)), nil
+	span, err = opentracing.StartSpan(r.URL.String(), ext.RPCServerOption(spanContext)), nil
 	if err != nil {
 		return span, err
 	}
-	span.SetTag("component", app)
-	span.SetTag("http.method", r.Method)
-	span.SetTag("http.url", r.URL)
+	<<!!YOUR_CODE!!>> Add tags for the component, the http method and url
 
 	return span, nil
 }
 
 func readQuest(ctx context.Context, body io.ReadCloser) (internal.Quest, error) {
 	// Starts a new child span from the given context.
-	span := opentracing.StartSpan(
-		internal.FuncName(0),
-		opentracing.ChildOf(opentracing.SpanFromContext(ctx).Context()),
-	)
-	defer span.Finish()
+	<<!!YOUR_CODE!!>> -- Create a new span from the given context.
 
 	var q internal.Quest
 	if err := json.NewDecoder(body).Decode(&q); err != nil {
 		return q, err
 	}
-	span.SetTag("action", "castle.readQuest")
-	span.LogKV("message", fmt.Sprintf("%s requested a melt", q.Knight))
+	<<!!YOUR_CODE!!>> - set a tag action=castle.readquest
+	<<!!YOUR_CODE!!>> - add a new log message=Knight XXX requested a melt
 
 	return q, nil
 }

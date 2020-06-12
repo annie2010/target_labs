@@ -66,7 +66,7 @@ func Call(ctx context.Context, method, url string, payload io.ReadCloser, res in
 	}
 	defer func() {
 		if resp.Body != nil {
-			_ = resp.Body.Close()
+			resp.Body.Close()
 		}
 	}()
 
@@ -86,12 +86,8 @@ func Call(ctx context.Context, method, url string, payload io.ReadCloser, res in
 
 // SpanError decorates span with the given error
 func SpanError(ctx context.Context, err error) error {
-	span := opentracing.SpanFromContext(ctx)
-	span.SetTag("error", true)
-	span.LogKV(
-		"event", "error",
-		"message", err.Error(),
-	)
+	<<!!YOUR_CODE!!>> Extract the current span from the context
+	<<!!YOUR_CODE!!>> Indicate this is an error span and log the error event and message
 
 	return err
 }
@@ -99,7 +95,6 @@ func SpanError(ctx context.Context, err error) error {
 // WriteErrOut formulate err response and decorate span
 func WriteErrOut(ctx context.Context, w http.ResponseWriter, err error) {
 	_ = SpanError(ctx, err)
-
 	// Extract span from context and annotate it.
 	span := opentracing.SpanFromContext(ctx)
 	span.SetTag("http.status_code", http.StatusExpectationFailed)
