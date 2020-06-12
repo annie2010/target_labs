@@ -1,4 +1,4 @@
-module github.com/gopherland/labs2/generator
+module github.com/gopherland/target_labs/generator
 
 go 1.14
 

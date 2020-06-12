@@ -9,7 +9,7 @@ import (
 	"log"
 
 	"github.com/gookit/color"
-	"github.com/gopherland/labs2/generator/stacks"
+	"github.com/gopherland/target_labs/generator/stacks"
 )
 
 //go:generate stacker -t float64,int32
