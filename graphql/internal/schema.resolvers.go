@@ -11,31 +11,31 @@ import (
 )
 
 func (r *mutationResolver) CreateAuthor(ctx context.Context, input model.AuthorInput) (*model.Author, error) {
-	return r.Resolver.CreateAuthor(input)
+	panic("NYI")
 }
 
 func (r *mutationResolver) DeleteAuthor(ctx context.Context, id string) (*model.Author, error) {
-	return r.Resolver.DeleteAuthor(id)
+	panic("NYI")
 }
 
 func (r *mutationResolver) DeleteBook(ctx context.Context, id string) (*model.Book, error) {
-	return r.Resolver.DeleteBook(id)
+	panic("NYI")
 }
 
 func (r *mutationResolver) DeleteBooksByAuthor(ctx context.Context, id string) ([]model.Book, error) {
-	return r.Resolver.DeleteBooksByAuthor(id)
+	panic("NYI")
 }
 
 func (r *queryResolver) AllBooks(ctx context.Context) ([]model.Book, error) {
-	return r.Resolver.AllBooks(), nil
+	panic("NYI")
 }
 
 func (r *queryResolver) AllAuthors(ctx context.Context) ([]model.Author, error) {
-	return r.Resolver.AllAuthors(), nil
+	panic("NYI")
 }
 
 func (r *queryResolver) BooksByAuthor(ctx context.Context, id string) ([]model.Book, error) {
-	return r.Resolver.BooksByAuthor(id)
+	panic("NYI")
 }
 
 // Mutation returns generated.MutationResolver implementation.
