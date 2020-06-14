@@ -93,7 +93,7 @@ func (a *Authors) Migrate(ctx context.Context) (err error) {
 		return
 	}
 
-	insertStmt, err := a.db.PrepareContext(ctx, authorsInsertDDL)
+	insertStmt, err := txn.PrepareContext(ctx, authorsInsertDDL)
 	if err != nil {
 		return err
 	}
