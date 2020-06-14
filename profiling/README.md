@@ -16,15 +16,6 @@ go test --run xxx --bench Rec --cpuprofile cpur.out
 go test --run xxx --bench Iter --cpuprofile cpui.out
 ```
 
-1. Run Handler benchmarks
-
-```shell
-cd internal
-go test --run xxx --bench .
-go test --run xxx --bench Rec --memprofile memr.out
-go test --run xxx --bench Iter --memprofile memi.out
-```
-
 1. Benchstat
 
 ```shell
