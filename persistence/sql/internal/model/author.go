@@ -83,13 +83,13 @@ func (a *Authors) Migrate(ctx context.Context) (err error) {
 		err = txn.Commit()
 	}()
 
-	if _, err = a.db.ExecContext(ctx, authorsDropDDL); err != nil {
+	if _, err = txn.ExecContext(ctx, authorsDropDDL); err != nil {
 		return
 	}
-	if _, err = a.db.ExecContext(ctx, authorsCreateDDL); err != nil {
+	if _, err = txn.ExecContext(ctx, authorsCreateDDL); err != nil {
 		return
 	}
-	if _, err = a.db.ExecContext(ctx, authorsIndexDDL); err != nil {
+	if _, err = txn.ExecContext(ctx, authorsIndexDDL); err != nil {
 		return
 	}
 
