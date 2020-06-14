@@ -78,6 +78,30 @@
       }
       ```
 
+1. Delete book
+
+      ```graphql
+      mutation deleteBook($id: ID!){
+        deleteBook(id: $id) {
+          id
+          title
+          category
+        }
+      }
+      ```
+
+1. Delete book by author
+
+      ```graphql
+      mutation {
+        b0: deleteBooksByAuthor(id: "isan-8") {
+          title
+        }
+        b1: deleteBooksByAuthor(id: "isan-9") {
+          title
+        }
+      }
+      ```
 
 ---
 <img src="../assets/imhotep_logo.png" width="32" height="auto"/> © 2020 Imhotep Software LLC.
