@@ -1,6 +1,9 @@
 package model
 
-import "github.com/jinzhu/gorm"
+import (
+	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
+)
 
 // BookAuthor represents a join table.
 type BookAuthor struct {
@@ -33,5 +36,7 @@ func (ba *BooksAuthors) Seed() error {
 			AuthorID: i + 1,
 		})
 	}
+	log.Info().Msgf("✅ Migrating BooksAuthors...")
+
 	return ba.db.Error
 }

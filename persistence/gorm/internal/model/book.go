@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
 )
 
 // Book represents a book.
@@ -53,7 +55,7 @@ func (b *Books) List(context.Context) ([]Book, error) {
 // Seed seeds the table with fake recs.
 func (b *Books) Seed() error {
 	for i := 1; i <= 10; i++ {
-		title := fmt.Sprintf("Rango%d", i)
+		title := gen.SillyName()
 		b.db.Create(&Book{
 			ISBN:        fmt.Sprintf("%x", sha1.Sum([]byte(title))),
 			Title:       title,
@@ -63,6 +65,7 @@ func (b *Books) Seed() error {
 			return b.db.Error
 		}
 	}
+	log.Info().Msgf("✅ Migrating Books...")
 
 	return nil
 }
