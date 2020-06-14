@@ -54,8 +54,8 @@ func (ba BooksAuthors) Migrate(ctx context.Context) error {
 	if err != nil {
 		return err
 	}
-	for i := 1; i < 3; i++ {
-		if _, err = insertStmt.ExecContext(ctx, i, i+1); err != nil {
+	for i := 1; i <= 10; i++ {
+		if _, err = insertStmt.ExecContext(ctx, i, i); err != nil {
 			return err
 		}
 	}

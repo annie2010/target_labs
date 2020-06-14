@@ -6,9 +6,9 @@ package model
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"math/rand"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/rs/zerolog/log"
 )
 
@@ -110,8 +110,8 @@ func (a *Authors) Migrate(ctx context.Context) (err error) {
 	for i := 0; i < 10; i++ {
 		if _, err = insertStmt.ExecContext(
 			ctx,
-			"Fernand",
-			fmt.Sprintf("Galiana%d", i),
+			gen.FirstName(gen.RandomGender),
+			gen.LastName(),
 			20+rand.Int31n(80),
 		); err != nil {
 			return

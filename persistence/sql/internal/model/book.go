@@ -10,6 +10,7 @@ import (
 	"fmt"
 	"time"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/rs/zerolog/log"
 )
 
@@ -155,7 +156,7 @@ func (b *Books) Migrate(ctx context.Context) (err error) {
 	}()
 
 	for i := 0; i < 10; i++ {
-		title := fmt.Sprintf("Rango%d", i)
+		title := gen.SillyName()
 		if _, err = insertStmt.ExecContext(
 			ctx,
 			fmt.Sprintf("%x", sha1.Sum([]byte(title))),
