@@ -3,7 +3,7 @@ package internal
 import (
 	"fmt"
 
-	"github.com/gopherland/target_labs/gql/internal/model"
+	"github.com/gopherland/target_labs/gql/internal/generated/model"
 )
 
 // Books represents a collection of books.

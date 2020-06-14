@@ -11,7 +11,7 @@ import (
 	gen "github.com/Pallinder/go-randomdata"
 	"github.com/gopherland/target_labs/gql/internal"
 	"github.com/gopherland/target_labs/gql/internal/generated"
-	"github.com/gopherland/target_labs/gql/internal/model"
+	"github.com/gopherland/target_labs/gql/internal/generated/model"
 )
 
 const defaultPort = "5000"

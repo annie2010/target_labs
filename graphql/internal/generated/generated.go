@@ -12,7 +12,7 @@ import (
 
 	"github.com/99designs/gqlgen/graphql"
 	"github.com/99designs/gqlgen/graphql/introspection"
-	"github.com/gopherland/target_labs/gql/internal/model"
+	"github.com/gopherland/target_labs/gql/internal/generated/model"
 	gqlparser "github.com/vektah/gqlparser/v2"
 	"github.com/vektah/gqlparser/v2/ast"
 )
@@ -361,7 +361,7 @@ func (ec *executionContext) field_Mutation_createAuthor_args(ctx context.Context
 	args := map[string]interface{}{}
 	var arg0 model.AuthorInput
 	if tmp, ok := rawArgs["input"]; ok {
-		arg0, err = ec.unmarshalNauthorInput2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthorInput(ctx, tmp)
+		arg0, err = ec.unmarshalNauthorInput2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthorInput(ctx, tmp)
 		if err != nil {
 			return nil, err
 		}
@@ -677,7 +677,7 @@ func (ec *executionContext) _Book_category(ctx context.Context, field graphql.Co
 	}
 	res := resTmp.(model.BookCategory)
 	fc.Result = res
-	return ec.marshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookCategory(ctx, field.Selections, res)
+	return ec.marshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookCategory(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Book_authors(ctx context.Context, field graphql.CollectedField, obj *model.Book) (ret graphql.Marshaler) {
@@ -711,7 +711,7 @@ func (ec *executionContext) _Book_authors(ctx context.Context, field graphql.Col
 	}
 	res := resTmp.([]model.Author)
 	fc.Result = res
-	return ec.marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthorᚄ(ctx, field.Selections, res)
+	return ec.marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthorᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_createAuthor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -749,7 +749,7 @@ func (ec *executionContext) _Mutation_createAuthor(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Author)
 	fc.Result = res
-	return ec.marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx, field.Selections, res)
+	return ec.marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_deleteAuthor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -787,7 +787,7 @@ func (ec *executionContext) _Mutation_deleteAuthor(ctx context.Context, field gr
 	}
 	res := resTmp.(*model.Author)
 	fc.Result = res
-	return ec.marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx, field.Selections, res)
+	return ec.marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_deleteBook(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -825,7 +825,7 @@ func (ec *executionContext) _Mutation_deleteBook(ctx context.Context, field grap
 	}
 	res := resTmp.(*model.Book)
 	fc.Result = res
-	return ec.marshalOBook2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx, field.Selections, res)
+	return ec.marshalOBook2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Mutation_deleteBooksByAuthor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -863,7 +863,7 @@ func (ec *executionContext) _Mutation_deleteBooksByAuthor(ctx context.Context, f
 	}
 	res := resTmp.([]model.Book)
 	fc.Result = res
-	return ec.marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookᚄ(ctx, field.Selections, res)
+	return ec.marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_allBooks(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -897,7 +897,7 @@ func (ec *executionContext) _Query_allBooks(ctx context.Context, field graphql.C
 	}
 	res := resTmp.([]model.Book)
 	fc.Result = res
-	return ec.marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookᚄ(ctx, field.Selections, res)
+	return ec.marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_allAuthors(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -931,7 +931,7 @@ func (ec *executionContext) _Query_allAuthors(ctx context.Context, field graphql
 	}
 	res := resTmp.([]model.Author)
 	fc.Result = res
-	return ec.marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthorᚄ(ctx, field.Selections, res)
+	return ec.marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthorᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query_booksByAuthor(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -969,7 +969,7 @@ func (ec *executionContext) _Query_booksByAuthor(ctx context.Context, field grap
 	}
 	res := resTmp.([]model.Book)
 	fc.Result = res
-	return ec.marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookᚄ(ctx, field.Selections, res)
+	return ec.marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookᚄ(ctx, field.Selections, res)
 }
 
 func (ec *executionContext) _Query___type(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
@@ -2561,11 +2561,11 @@ func (ec *executionContext) ___Type(ctx context.Context, sel ast.SelectionSet, o
 
 // region    ***************************** type.gotpl *****************************
 
-func (ec *executionContext) marshalNAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v model.Author) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v model.Author) graphql.Marshaler {
 	return ec._Author(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthorᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Author) graphql.Marshaler {
+func (ec *executionContext) marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthorᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Author) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -2589,7 +2589,7 @@ func (ec *executionContext) marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx, sel, v[i])
+			ret[i] = ec.marshalNAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -2602,11 +2602,11 @@ func (ec *executionContext) marshalNAuthor2ᚕgithubᚗcomᚋgopherlandᚋtarget
 	return ret
 }
 
-func (ec *executionContext) marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v model.Book) graphql.Marshaler {
+func (ec *executionContext) marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v model.Book) graphql.Marshaler {
 	return ec._Book(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Book) graphql.Marshaler {
+func (ec *executionContext) marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Book) graphql.Marshaler {
 	ret := make(graphql.Array, len(v))
 	var wg sync.WaitGroup
 	isLen1 := len(v) == 1
@@ -2630,7 +2630,7 @@ func (ec *executionContext) marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_l
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx, sel, v[i])
+			ret[i] = ec.marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -2643,12 +2643,12 @@ func (ec *executionContext) marshalNBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_l
 	return ret
 }
 
-func (ec *executionContext) unmarshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookCategory(ctx context.Context, v interface{}) (model.BookCategory, error) {
+func (ec *executionContext) unmarshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookCategory(ctx context.Context, v interface{}) (model.BookCategory, error) {
 	var res model.BookCategory
 	return res, res.UnmarshalGQL(v)
 }
 
-func (ec *executionContext) marshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookCategory(ctx context.Context, sel ast.SelectionSet, v model.BookCategory) graphql.Marshaler {
+func (ec *executionContext) marshalNBookCategory2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookCategory(ctx context.Context, sel ast.SelectionSet, v model.BookCategory) graphql.Marshaler {
 	return v
 }
 
@@ -2920,26 +2920,26 @@ func (ec *executionContext) marshalN__TypeKind2string(ctx context.Context, sel a
 	return res
 }
 
-func (ec *executionContext) unmarshalNauthorInput2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthorInput(ctx context.Context, v interface{}) (model.AuthorInput, error) {
+func (ec *executionContext) unmarshalNauthorInput2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthorInput(ctx context.Context, v interface{}) (model.AuthorInput, error) {
 	return ec.unmarshalInputauthorInput(ctx, v)
 }
 
-func (ec *executionContext) marshalOAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v model.Author) graphql.Marshaler {
+func (ec *executionContext) marshalOAuthor2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v model.Author) graphql.Marshaler {
 	return ec._Author(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v *model.Author) graphql.Marshaler {
+func (ec *executionContext) marshalOAuthor2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐAuthor(ctx context.Context, sel ast.SelectionSet, v *model.Author) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
 	return ec._Author(ctx, sel, v)
 }
 
-func (ec *executionContext) marshalOBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v model.Book) graphql.Marshaler {
+func (ec *executionContext) marshalOBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v model.Book) graphql.Marshaler {
 	return ec._Book(ctx, sel, &v)
 }
 
-func (ec *executionContext) marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBookᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Book) graphql.Marshaler {
+func (ec *executionContext) marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBookᚄ(ctx context.Context, sel ast.SelectionSet, v []model.Book) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}
@@ -2966,7 +2966,7 @@ func (ec *executionContext) marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_l
 			if !isLen1 {
 				defer wg.Done()
 			}
-			ret[i] = ec.marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx, sel, v[i])
+			ret[i] = ec.marshalNBook2githubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx, sel, v[i])
 		}
 		if isLen1 {
 			f(i)
@@ -2979,7 +2979,7 @@ func (ec *executionContext) marshalOBook2ᚕgithubᚗcomᚋgopherlandᚋtarget_l
 	return ret
 }
 
-func (ec *executionContext) marshalOBook2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v *model.Book) graphql.Marshaler {
+func (ec *executionContext) marshalOBook2ᚖgithubᚗcomᚋgopherlandᚋtarget_labsᚋgqlᚋinternalᚋgeneratedᚋmodelᚐBook(ctx context.Context, sel ast.SelectionSet, v *model.Book) graphql.Marshaler {
 	if v == nil {
 		return graphql.Null
 	}

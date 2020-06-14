@@ -7,34 +7,34 @@ import (
 	"context"
 
 	"github.com/gopherland/target_labs/gql/internal/generated"
-	"github.com/gopherland/target_labs/gql/internal/model"
+	model1 "github.com/gopherland/target_labs/gql/internal/generated/model"
 )
 
-func (r *mutationResolver) CreateAuthor(ctx context.Context, input model.AuthorInput) (*model.Author, error) {
+func (r *mutationResolver) CreateAuthor(ctx context.Context, input model1.AuthorInput) (*model1.Author, error) {
 	return r.Resolver.CreateAuthor(input)
 }
 
-func (r *mutationResolver) DeleteAuthor(ctx context.Context, id string) (*model.Author, error) {
+func (r *mutationResolver) DeleteAuthor(ctx context.Context, id string) (*model1.Author, error) {
 	return r.Resolver.DeleteAuthor(id)
 }
 
-func (r *mutationResolver) DeleteBook(ctx context.Context, id string) (*model.Book, error) {
+func (r *mutationResolver) DeleteBook(ctx context.Context, id string) (*model1.Book, error) {
 	return r.Resolver.DeleteBook(id)
 }
 
-func (r *mutationResolver) DeleteBooksByAuthor(ctx context.Context, id string) ([]model.Book, error) {
+func (r *mutationResolver) DeleteBooksByAuthor(ctx context.Context, id string) ([]model1.Book, error) {
 	return r.Resolver.DeleteBooksByAuthor(id)
 }
 
-func (r *queryResolver) AllBooks(ctx context.Context) ([]model.Book, error) {
+func (r *queryResolver) AllBooks(ctx context.Context) ([]model1.Book, error) {
 	return r.Resolver.AllBooks(), nil
 }
 
-func (r *queryResolver) AllAuthors(ctx context.Context) ([]model.Author, error) {
+func (r *queryResolver) AllAuthors(ctx context.Context) ([]model1.Author, error) {
 	return r.Resolver.AllAuthors(), nil
 }
 
-func (r *queryResolver) BooksByAuthor(ctx context.Context, id string) ([]model.Book, error) {
+func (r *queryResolver) BooksByAuthor(ctx context.Context, id string) ([]model1.Book, error) {
 	return r.Resolver.BooksByAuthor(id)
 }
 
