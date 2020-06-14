@@ -33,7 +33,7 @@ func TestCompute(t *testing.T) {
 	}
 }
 
-<<!!YOUR_CODE!!>> -- Ensure your new Implementation produces the same results!
+<<!!YOUR_CODE!!>> -- Ensure your new implementation produces the same results!
 
 
 func BenchmarkCompute(b *testing.B) {
