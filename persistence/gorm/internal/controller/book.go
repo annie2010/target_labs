@@ -16,7 +16,7 @@ type Book struct {
 
 // BookCruder represents a curdable book.
 type BookCruder interface {
-	// List retrieves all books.
+	// List returns all books.
 	List(context.Context) ([]model.Book, error)
 
 	// ByAuthor returns books by a given author last name.

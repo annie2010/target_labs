@@ -18,6 +18,7 @@ type Author struct {
 
 // AuthorCruder represents CRUD operations on author model.
 type AuthorCruder interface {
+	// List returns all authors.
 	List(context.Context) ([]model.Author, error)
 }
 
