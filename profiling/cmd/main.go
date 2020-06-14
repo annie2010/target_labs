@@ -16,7 +16,7 @@ import (
 const httpPort = ":4500"
 
 func main() {
-	defer profile.Start(profile.ThreadcreationProfile).Stop()
+	defer profile.Start(profile.CPUProfile).Stop()
 
 	http.HandleFunc("/fibr", internal.FibHandler)
 	http.HandleFunc("/fibi", internal.FibHandlerIter)

@@ -6,44 +6,34 @@
 
 # Profiling Lab
 
----
-## <img src="../assets/lab.png" width="auto" height="32"/> Mission
-
-> Implement a Fibonacci number web service that produces the first n Fibonacci numbers given n as input.
-
-  ```text
-    fib(0) = 0
-    fib(1) = 1
-    fib(n) = fib(n-2)+fib(n-1)
-  ```
-
-+ Clone the [Labs Repo](https://github.com/gopherland/target_labs)
-+ Cd profiling
-+ A Fib service initial implementation has been provided for you.
-+ Ensure the tests are passing!
-+ Start your web server and ensure valid output
-+ Using profiling technics, establish the service performance profile and baseline.
-  + Record initial numbers gathered via hey or apache bench
-  + Is this service CPU/Mem or IO bound?
-+ Leverage MicroBenchmarks to assert your profiling experimentation and improvements.
-+ What do you notice and what can you improve?
-+ Tune the implementation and repeat the profiling process to produce the best possible results.
-
 ## Commands
 
-### Check the service endpoint
+1. Run fib benchmarks
 
 ```shell
-http :4500/fib n==5
+cd internal/fib
+go test --run xxx --bench Rec --cpuprofile cpur.out
+go test --run xxx --bench Iter --cpuprofile cpui.out
+go tool pprof -base cpui.out cpur.out
 ```
 
-### Load service using hey
+1. Run Handler benchmarks
 
 ```shell
-# Install hey
-go get -u github.com/rakyll/hey
-# Run the fib compute for 0-20
-hey -c 2 -n 100000 http://localhost:4500/fib?n=20
+cd internal
+go test --run xxx --bench .
+go test --run xxx --bench Rec --memprofile memr.out
+go test --run xxx --bench Iter --memprofile memi.out
+go tool pprof -base memi.out memr.out
+```
+
+1. Benchstat
+
+```shell
+go test --run xxx --bench Rec --count=10 | tee fib1.out
+go test --run xxx --bench Iter --count=10 | tee fib2.out
+sed -i '' 's/Rec//g' fib1.out && sed -i '' 's/Iter//g' fib2.out
+benchstat fib1.out fib2.out
 ```
 
 ---
