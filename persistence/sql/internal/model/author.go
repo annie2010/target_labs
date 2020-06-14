@@ -6,9 +6,9 @@ package model
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"math/rand"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/rs/zerolog/log"
 )
 
@@ -32,7 +32,7 @@ func NewAuthors(db *sql.DB) *Authors {
 
 // Index retrieves all Authors.
 func (a *Authors) List(ctx context.Context) ([]Author, error) {
-	<<!!YOUR_CODE!!>> -- retrieve authors from the database.
+	<<!!YOUR_CODE!!>> -- return a collection of authors by querying the db.
 }
 
 const (
@@ -48,44 +48,37 @@ const (
 
 // Migrate migrates the database.
 func (a *Authors) Migrate(ctx context.Context) (err error) {
-	log.Debug().Msgf("Migrating Authors...")
-	txn, err := a.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
+	var txn *sql.Tx
+	if txn, err = a.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable}); err != nil {
+		return
+	}
+	defer func() {
+		if err != nil {
+			err = txn.Rollback()
+		}
+		log.Info().Msgf("✅ Migrating Authors...")
+		err = txn.Commit()
+	}()
+
+	if _, err = txn.ExecContext(ctx, authorsDropDDL); err != nil {
+		return
+	}
+	if _, err = txn.ExecContext(ctx, authorsCreateDDL); err != nil {
+		return
+	}
+
+	insertStmt, err := txn.PrepareContext(ctx, authorsInsertDDL)
 	if err != nil {
 		return err
 	}
 	defer func() {
-		if err == nil {
-			if err = txn.Commit(); err != nil {
-				log.Error().Err(err).Msg("author commit failed")
-			}
-			return
-		}
-		log.Error().Err(err).Msg("author migration failed")
-		err = txn.Rollback()
+		err = insertStmt.Close()
 	}()
-
-	if _, err = a.db.ExecContext(ctx, authorsDropDDL); err != nil {
-		return
-	}
-	if _, err = a.db.ExecContext(ctx, authorsCreateDDL); err != nil {
-		return
-	}
-
-	insertStmt, err := a.db.PrepareContext(ctx, authorsInsertDDL)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err = insertStmt.Close(); err != nil {
-			return
-		}
-	}()
-
 	for i := 0; i < 10; i++ {
 		if _, err = insertStmt.ExecContext(
 			ctx,
-			"Fernand",
-			fmt.Sprintf("Galiana%d", i),
+			gen.FirstName(gen.RandomGender),
+			gen.LastName(),
 			20+rand.Int31n(80),
 		); err != nil {
 			return
