@@ -17,8 +17,12 @@ type Book struct {
 	model BookCruder
 }
 
+// BookCruder represents book related queries.
 type BookCruder interface {
+	// List returns all books.
 	List(context.Context) ([]model.Book, error)
+
+	// ByAuthor returns all books for a given author last name.
 	ByAuthor(context.Context, string) ([]model.Book, error)
 }
 

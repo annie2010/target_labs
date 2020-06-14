@@ -37,6 +37,21 @@ const (
 // Migrate migrates the database.
 func (ba BooksAuthors) Migrate(ctx context.Context) error {
 	log.Debug().Msgf("Migrating BookAuthor...")
+	txn, err := ba.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err == nil {
+			if err = txn.Commit(); err != nil {
+				log.Error().Err(err).Msg("books_authors commit failed")
+			}
+			return
+		}
+		log.Error().Err(err).Msg("books_authors migration failed")
+		err = txn.Rollback()
+	}()
+
 	if _, err := ba.db.ExecContext(ctx, baDeleteDDL); err != nil {
 		return err
 	}
@@ -53,6 +68,11 @@ func (ba BooksAuthors) Migrate(ctx context.Context) error {
 			return err
 		}
 	}
+	defer func() {
+		if err = insertStmt.Close(); err != nil {
+			return
+		}
+	}()
 
 	return nil
 }

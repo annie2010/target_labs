@@ -33,28 +33,11 @@ type Book struct {
 // Books represents a persistent books model.
 type Books struct {
 	db           *sql.DB
-	byAuthorStmt *sql.Stmt
 }
 
 // NewBooks returns a new instance.
 func NewBooks(db *sql.DB) *Books {
 	return &Books{db: db}
-}
-
-func (b *Books) init(ctx context.Context) (err error) {
-	if b.byAuthorStmt != nil {
-		return err
-	}
-
-	const byAuthor = `select * from books b
-	  where b.id in (
-			select book_id from books_authors where author_id in (
-				select id from authors a where a.last_name=$1
-			)
-		);
-	`
-	b.byAuthorStmt, err = b.db.PrepareContext(ctx, byAuthor)
-	return
 }
 
 // ByAuthor finds all books by a given author last name.
