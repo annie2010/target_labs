@@ -129,8 +129,8 @@ func (b *Books) Migrate(ctx context.Context) (err error) {
 			err = txn.Rollback()
 			return
 		}
-		err = txn.Commit()
 		log.Info().Msgf("✅ Migrating Book...")
+		err = txn.Commit()
 	}()
 
 	if _, err = txn.ExecContext(ctx, booksDropDDL); err != nil {
