@@ -44,7 +44,7 @@ func TestFibHandlerIter(t *testing.T) {
 	}
 }
 
-func BenchmarkFibHandler(b *testing.B) {
+func BenchmarkFibHandlerRec(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/fib?n=3", nil)
