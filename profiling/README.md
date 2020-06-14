@@ -14,7 +14,6 @@
 cd internal/fib
 go test --run xxx --bench Rec --cpuprofile cpur.out
 go test --run xxx --bench Iter --cpuprofile cpui.out
-go tool pprof -base cpui.out cpur.out
 ```
 
 1. Run Handler benchmarks
@@ -24,7 +23,6 @@ cd internal
 go test --run xxx --bench .
 go test --run xxx --bench Rec --memprofile memr.out
 go test --run xxx --bench Iter --memprofile memi.out
-go tool pprof -base memi.out memr.out
 ```
 
 1. Benchstat
