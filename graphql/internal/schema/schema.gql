@@ -1,65 +1,39 @@
 "Represents Book Categories"
 enum BookCategory {
-  ROMANCE
-  DRAMA
-  FICTION
+  <<!!YOUR_CODE!!>> -- Define romance, drama, fiction enumerables
 }
 
 "Represents a book"
 type Book {
-  "Represents book isbn number"
-  id: ID!
-  "The title of the book"
-  title: String!
-  "The book category"
-  category: BookCategory!
-  "The book authors"
-  authors: [Author!]!
+  <<!!YOUR_CODE!!>> -- Book as an id(ISBN), title, category(enum), authors
 }
 
 "Represents an author"
 type Author {
-  "Represents an author unique identifier"
-  id: ID!
-  "The author first name"
-  first: String!
-  "The author last name"
-  last: String!
+  <<!!YOUR_CODE!!>> -- Author a an id(IBAN), first and last names
 }
 
+"Barnes & Noble schema definition"
 schema {
+  "Supported queries"
   query: Query
+
+  "Supported mutations"
   mutation: Mutation
 }
 
-"Barnes and Noble GraphQL APIs"
+"Barnes and Noble GraphQL Queries"
 type Query {
-  "Fetch all available books"
-  allBooks: [Book!]!
-
-  "Fetch all available authors"
-  allAuthors: [Author!]!
-
-  "Fetch books from a given *author*"
-  booksByAuthor(id: ID!): [Book!]
+  <<!!YOUR_CODE!!>> -- define your queries: allBooks, allAuthors, booksByAuthor
 }
 
+"Barnes and Noble GraphQL Mutations"
 type Mutation {
-  "Add a new author"
-  createAuthor(input: authorInput!): Author
-
-  "Delete an author by isan"
-  deleteAuthor(id: ID!): Author
-
-  "Delete a book by isbn"
-  deleteBook(id: ID!): Book
-
-  "Delete all books by a given author"
-  deleteBooksByAuthor(id: ID!): [Book!]
+  <<!!YOUR_CODE!!>> -- define your mutations
+  <<!!YOUR_CODE!!>> -- createAuthor: must take an input form with first and last
+  <<!!YOUR_CODE!!>> -- deleteAuthor: must take an ISAN
+  <<!!YOUR_CODE!!>> -- deleteBook: must take an ISBN
+  <<!!YOUR_CODE!!>> -- deleteBooksByAuthor: delete all books given an author ISAN
 }
 
-input authorInput {
-  id: ID!
-  first: String!
-  last: String!
-}
+<<!!YOUR_CODE!!>> -- Define your input forms for your mutations

@@ -6,19 +6,19 @@ import (
 	"github.com/gopherland/target_labs/gql/internal/model"
 )
 
-// This file will not be regenerated automatically.
-//
-// It serves as dependency injection for your app, add any dependencies you require here.
-
+// Books represents a collection of books.
 type Books map[string]model.Book
 
+// Authors represents a collection of authors.
 type Authors map[string]model.Author
 
+// Resolver represents a schema resolver.
 type Resolver struct {
 	Books   map[string]model.Book
 	Authors map[string]model.Author
 }
 
+// NewResolver returns a new instance.
 func NewResolver() *Resolver {
 	return &Resolver{
 		Books:   make(Books),
@@ -26,6 +26,7 @@ func NewResolver() *Resolver {
 	}
 }
 
+// CreateAuthor creates a new author.
 func (r *Resolver) CreateAuthor(f model.AuthorInput) (*model.Author, error) {
 	if _, ok := r.Authors[f.ID]; ok {
 		return nil, fmt.Errorf("Meow! Author `%s already exists", f.ID)
@@ -37,6 +38,7 @@ func (r *Resolver) CreateAuthor(f model.AuthorInput) (*model.Author, error) {
 	return &a, nil
 }
 
+// AllBooks returns all available books.
 func (r *Resolver) AllBooks() []model.Book {
 	bb := make([]model.Book, 0, len(r.Books))
 	for _, b := range r.Books {
@@ -46,6 +48,7 @@ func (r *Resolver) AllBooks() []model.Book {
 	return bb
 }
 
+// AllAuthors returns all available authors.
 func (r *Resolver) AllAuthors() []model.Author {
 	aa := make([]model.Author, 0, len(r.Authors))
 	for _, a := range r.Authors {
@@ -55,6 +58,8 @@ func (r *Resolver) AllAuthors() []model.Author {
 	return aa
 }
 
+// DeleteAuthor nukes an author by ISAN and all related books.
+// Returns an error is the author does not exists.
 func (r *Resolver) DeleteAuthor(id string) (*model.Author, error) {
 	if a, ok := r.Authors[id]; ok {
 		delete(r.Authors, id)
@@ -65,6 +70,8 @@ func (r *Resolver) DeleteAuthor(id string) (*model.Author, error) {
 	return nil, fmt.Errorf("Meow! Author `%s not found", id)
 }
 
+// BooksByAuthor find all books given an author ISAN.
+// Returns an error if the author does not exists.
 func (r *Resolver) BooksByAuthor(id string) ([]model.Book, error) {
 	if _, ok := r.Authors[id]; !ok {
 		return nil, fmt.Errorf("Meow! Author `%s not found", id)
@@ -82,6 +89,7 @@ func (r *Resolver) BooksByAuthor(id string) ([]model.Book, error) {
 	return bb, nil
 }
 
+// DeleteBooksByAuthors deletes all books from a given author ISAN.
 func (r *Resolver) DeleteBooksByAuthor(id string) ([]model.Book, error) {
 	victims := make([]model.Book, 0, 1)
 	for k, b := range r.Books {
@@ -98,6 +106,7 @@ func (r *Resolver) DeleteBooksByAuthor(id string) ([]model.Book, error) {
 	return nil, fmt.Errorf("Meow! No books found for author `%s", id)
 }
 
+// DeleteBook deletes a book given an ISBN.
 func (r *Resolver) DeleteBook(id string) (*model.Book, error) {
 	if b, ok := r.Books[id]; ok {
 		delete(r.Books, id)
