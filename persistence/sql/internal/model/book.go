@@ -46,6 +46,7 @@ func (b *Books) init(ctx context.Context) (err error) {
 		);
 	`
 	b.byAuthorStmt, err = b.db.PrepareContext(ctx, byAuthor)
+
 	return
 }
 
@@ -119,50 +120,40 @@ const (
 
 // Migrate migrates the database.
 func (b *Books) Migrate(ctx context.Context) (err error) {
-	log.Debug().Msgf("Migrating Book...")
-	txn, err := b.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
+	var txn *sql.Tx
+	if txn, err = b.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable}); err != nil {
+		return
+	}
+	defer func() {
+		if err != nil {
+			err = txn.Rollback()
+			return
+		}
+		err = txn.Commit()
+		log.Info().Msgf("✅ Migrating Book...")
+	}()
+
+	if _, err = txn.ExecContext(ctx, booksDropDDL); err != nil {
+		return
+	}
+	if _, err = txn.ExecContext(ctx, booksCreateDDL); err != nil {
+		return
+	}
+	if _, err = txn.ExecContext(ctx, booksIndexDDL); err != nil {
+		return
+	}
+
+	insertStmt, err := txn.PrepareContext(ctx, booksInsertDDL)
 	if err != nil {
 		return err
 	}
 	defer func() {
-		if err == nil {
-			if err = txn.Commit(); err != nil {
-				log.Error().Err(err).Msg("books commit failed")
-			}
-			return
-		}
-		log.Error().Err(err).Msg("books migration failed")
-		err = txn.Rollback()
+		err = insertStmt.Close()
 	}()
-
-	if _, err = b.db.ExecContext(ctx, booksDropDDL); err != nil {
-		return
-	}
-	if _, err = b.db.ExecContext(ctx, booksCreateDDL); err != nil {
-		return
-	}
-	if _, err = b.db.ExecContext(ctx, booksIndexDDL); err != nil {
-		return
-	}
-
-	insertStmt, err := b.db.PrepareContext(ctx, booksInsertDDL)
-	if err != nil {
-		return err
-	}
-	defer func() {
-		if err = insertStmt.Close(); err != nil {
-			return
-		}
-	}()
-
 	for i := 0; i < 10; i++ {
 		title := gen.SillyName()
-		if _, err = insertStmt.ExecContext(
-			ctx,
-			fmt.Sprintf("%x", sha1.Sum([]byte(title))),
-			title,
-			time.Now(),
-		); err != nil {
+		_, err = insertStmt.ExecContext(ctx, fmt.Sprintf("%x", sha1.Sum([]byte(title))), title, time.Now())
+		if err != nil {
 			return
 		}
 	}

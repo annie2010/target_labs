@@ -71,20 +71,16 @@ const (
 
 // Migrate migrates the database.
 func (a *Authors) Migrate(ctx context.Context) (err error) {
-	log.Debug().Msgf("Migrating Authors...")
-	txn, err := a.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable})
-	if err != nil {
-		return err
+	var txn *sql.Tx
+	if txn, err = a.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable}); err != nil {
+		return
 	}
 	defer func() {
-		if err == nil {
-			if err = txn.Commit(); err != nil {
-				log.Error().Err(err).Msg("author commit failed")
-			}
-			return
+		if err != nil {
+			err = txn.Rollback()
 		}
-		log.Error().Err(err).Msg("author migration failed")
-		err = txn.Rollback()
+		log.Info().Msgf("✅ Migrating Authors...")
+		err = txn.Commit()
 	}()
 
 	if _, err = a.db.ExecContext(ctx, authorsDropDDL); err != nil {
@@ -102,11 +98,8 @@ func (a *Authors) Migrate(ctx context.Context) (err error) {
 		return err
 	}
 	defer func() {
-		if err = insertStmt.Close(); err != nil {
-			return
-		}
+		err = insertStmt.Close()
 	}()
-
 	for i := 0; i < 10; i++ {
 		if _, err = insertStmt.ExecContext(
 			ctx,

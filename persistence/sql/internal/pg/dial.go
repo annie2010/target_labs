@@ -40,6 +40,6 @@ func (d DialOpts) Flatten() string {
 
 // Dial dials in the connection.
 func Dial(opts DialOpts) (*sql.DB, error) {
-	log.Debug().Msgf("DB Connecting... %v", opts)
+	log.Debug().Msgf("🌏 Connecting DB ... %v", opts)
 	return sql.Open(pgDriver, opts.Flatten())
 }

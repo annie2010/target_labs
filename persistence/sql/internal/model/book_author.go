@@ -35,30 +35,45 @@ const (
 )
 
 // Migrate migrates the database.
-func (ba BooksAuthors) Migrate(ctx context.Context) error {
-	log.Debug().Msgf("Migrating BookAuthor...")
-	if _, err := ba.db.ExecContext(ctx, baDeleteDDL); err != nil {
-		return err
+func (ba BooksAuthors) Migrate(ctx context.Context) (err error) {
+	var txn *sql.Tx
+	if txn, err = ba.db.BeginTx(ctx, &sql.TxOptions{Isolation: sql.LevelSerializable}); err != nil {
+		return
 	}
-	if _, err := ba.db.ExecContext(ctx, baCreateDDL); err != nil {
-		return err
+	defer func() {
+		if err != nil {
+			err = txn.Rollback()
+			return
+		}
+		log.Info().Msgf("✅ Migrating BooksAuthors...")
+		err = txn.Commit()
+	}()
+
+	if _, err = txn.ExecContext(ctx, baDeleteDDL); err != nil {
+		return
 	}
-	if _, err := ba.db.ExecContext(ctx, `create index book_idx on books_authors(book_id);`); err != nil {
-		return err
+	if _, err = txn.ExecContext(ctx, baCreateDDL); err != nil {
+		return
 	}
-	if _, err := ba.db.ExecContext(ctx, `create index author_idx on books_authors(author_id);`); err != nil {
-		return err
+	if _, err = txn.ExecContext(ctx, `create index book_idx on books_authors(book_id);`); err != nil {
+		return
+	}
+	if _, err = txn.ExecContext(ctx, `create index author_idx on books_authors(author_id);`); err != nil {
+		return
 	}
 
-	insertStmt, err := ba.db.PrepareContext(ctx, baInsertDDL)
+	insertStmt, err := txn.PrepareContext(ctx, baInsertDDL)
 	if err != nil {
 		return err
 	}
+	defer func() {
+		err = insertStmt.Close()
+	}()
 	for i := 1; i <= 10; i++ {
 		if _, err = insertStmt.ExecContext(ctx, i, i); err != nil {
-			return err
+			return
 		}
 	}
 
-	return nil
+	return
 }
