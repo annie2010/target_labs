@@ -28,7 +28,7 @@ func (d DialOpts) String() string {
 }
 
 // Flatten returns a datasource string.
-func (d DialOpts) Flatten() string {
+func (d DialOpts) flatten() string {
 	return fmt.Sprintf(dataSourceFmt,
 		d.User,
 		d.Password,
@@ -41,5 +41,5 @@ func (d DialOpts) Flatten() string {
 // Dial dials in the connection.
 func Dial(opts DialOpts) (*sql.DB, error) {
 	log.Debug().Msgf("🌏 Connecting DB ... %v", opts)
-	return sql.Open(pgDriver, opts.Flatten())
+	return sql.Open(pgDriver, opts.flatten())
 }

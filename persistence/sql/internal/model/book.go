@@ -91,7 +91,7 @@ func (b *Books) List(ctx context.Context) ([]Book, error) {
 		}
 	}()
 
-	bb := make([]Book, 10)
+	bb := make([]Book, 0, 10)
 	for rows.Next() {
 		var b Book
 		if err = rows.Scan(&b.ID, &b.ISBN, &b.Title, &b.PublishedOn); err != nil {
