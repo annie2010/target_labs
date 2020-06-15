@@ -49,9 +49,12 @@ func FibHandlerIter(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	res := make(Results, 0, n)
+	res := make(Results, n+1)
 	for i := 0; i <= int(n); i++ {
-		res = append(res, Result{Number: i, Fibonacci: fib.ComputeIter(i)})
+		res[i] = Result{
+			Number:    i,
+			Fibonacci: fib.ComputeIter(i),
+		}
 	}
 
 	buff, err := json.Marshal(&res)
