@@ -5,17 +5,14 @@
 package grep
 
 import (
-	"strings"
+	"unicode"
 )
 
 // WordCount returns the number of occurrence of a word in a line.
-func WordCount(word, line string) (count int64) {
-	var (
-		index int
-		l     = strings.ToLower(line)
-	)
-	for _, b := range []byte(l) {
-		if b != word[index] {
+func WordCount(word, line []byte) (count int64) {
+	var index int
+	for _, b := range line {
+		if byte(unicode.ToLower(rune(b))) != word[index] {
 			index = 0
 			continue
 		}
