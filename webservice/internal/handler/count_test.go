@@ -21,8 +21,9 @@ func TestCountHandler(t *testing.T) {
 		r, _ = http.NewRequest("GET", "http://example.com/v1/wc/3lpigs/pig", nil)
 	)
 
+	h := handler.NewBook()
 	mx := mux.NewRouter()
-	mx.HandleFunc(`/v1/wc/{book:[\w]+}/{word:[\w]+}`, handler.CountHandler)
+	mx.HandleFunc(`/v1/wc/{book:[\w]+}/{word:[\w]+}`, h.Count)
 	mx.ServeHTTP(rr, r)
 
 	assert.Equal(t, http.StatusOK, rr.Code)
@@ -38,13 +39,15 @@ func BenchmarkCountHandler(b *testing.B) {
 	var (
 		rr   = httptest.NewRecorder()
 		r, _ = http.NewRequest("GET", "http://example.com/v1/grep/3lpigs/pig", nil)
+		h    = handler.NewBook()
 	)
 
 	mx := mux.NewRouter()
+	mx.HandleFunc(`/v1/grep/{book:[\w]+}/{word:[\w]+}`, h.Count)
+
 	b.ReportAllocs()
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		mx.HandleFunc(`/v1/grep/{book:[\w]+}/{word:[\w]+}`, handler.CountHandler)
 		mx.ServeHTTP(rr, r)
 	}
 }

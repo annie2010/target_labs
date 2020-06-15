@@ -40,8 +40,18 @@ func TestWordCount(t *testing.T) {
 	for k := range uu {
 		u := uu[k]
 		t.Run(k, func(t *testing.T) {
-			assert.Equal(t, u.e, grep.WordCount("moby", u.text))
+			assert.Equal(t, u.e, grep.WordCount([]byte("moby"), []byte(u.text)))
 		})
+	}
+}
+
+func BenchmarkCount(b *testing.B) {
+	w, line := []byte("moby"), []byte(genSamples(b)[3])
+
+	b.ReportAllocs()
+	b.ResetTimer()
+	for n := 0; n < b.N; n++ {
+		grep.WordCount(w, line)
 	}
 }
 

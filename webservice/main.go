@@ -22,7 +22,8 @@ const (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc(`/api/v1/grep/{book:\w+}/{word:\w+}`, handler.CountHandler)
+	h := handler.NewBook()
+	r.HandleFunc(`/api/v1/grep/{book:\w+}/{word:\w+}`, h.Count)
 	r.Use(mux.CORSMethodMiddleware(r))
 	r.Use(func(h http.Handler) http.Handler {
 		return handlers.LoggingHandler(os.Stdout, h)
@@ -34,6 +35,6 @@ func main() {
 		WriteTimeout: defaultTimeout,
 		ReadTimeout:  defaultTimeout,
 	}
-	log.Printf("[BookGrep] Service listening on port %s", port)
+	log.Printf("🌎 [BookGrep] Service listening on port %s", port)
 	log.Panic(svc.ListenAndServe())
 }

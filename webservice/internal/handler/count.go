@@ -5,19 +5,22 @@
 package handler
 
 import (
-	"bufio"
+	"bytes"
 	"encoding/json"
 	"errors"
 	"net/http"
 	"os"
 	"path/filepath"
-	"strings"
 
 	"github.com/gopherland/target_labs/webservice/internal/grep"
 	"github.com/gorilla/mux"
+	"github.com/rs/zerolog/log"
 )
 
-const assetDir = "assets"
+const (
+	assetDir = "assets"
+	maxBuff  = 10_000
+)
 
 type Response struct {
 	Book        string `json:"book"`
@@ -25,8 +28,14 @@ type Response struct {
 	Occurrences int64  `json:"count"`
 }
 
-// CountHandler returns the number of occurrence of a word in a book.
-func CountHandler(w http.ResponseWriter, r *http.Request) {
+type Book struct{}
+
+func NewBook() Book {
+	return Book{}
+}
+
+// Count returns the number of occurrence of a word in a book.
+func (b Book) Count(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
 	count, err := count(params["book"], params["word"])
@@ -63,16 +72,15 @@ func count(book, word string) (int64, error) {
 	if err != nil {
 		return 0, err
 	}
-
-	var count int64
-	scanner := bufio.NewScanner(file)
-	w := strings.ToLower(word)
-	for scanner.Scan() {
-		count += grep.WordCount(w, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
+	defer func() {
+		if e := file.Close(); e != nil {
+			log.Error().Err(e).Msg("closing file")
+		}
+	}()
+	bb := make([]byte, maxBuff)
+	if _, err = file.Read(bb); err != nil {
 		return 0, err
 	}
 
-	return count, nil
+	return grep.WordCount(bytes.ToLower([]byte(word)), bb), nil
 }
