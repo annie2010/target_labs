@@ -3,6 +3,7 @@ module github.com/gopherland/target_labs/gorm
 go 1.14
 
 require (
+	github.com/Pallinder/go-randomdata v1.2.0
 	github.com/gorilla/handlers v1.4.2
 	github.com/gorilla/mux v1.7.4
 	github.com/jinzhu/gorm v1.9.12

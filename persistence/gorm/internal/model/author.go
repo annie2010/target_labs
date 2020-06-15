@@ -2,10 +2,11 @@ package model
 
 import (
 	"context"
-	"fmt"
 	"math/rand"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
 )
 
 // Author represents an author.
@@ -29,21 +30,23 @@ func NewAuthors(db *gorm.DB) *Authors {
 }
 
 // Index retrieves all Authors.
-func (a *Authors) List(ctx context.Context) ([]Author, error) {
-	<<!!YOUR_CODE!!>> -- fetch all authors from DB
+func (a *Authors) List(context.Context) ([]Author, error) {
+	<<!!YOUR_CODE!!>> - returns all authors from db
 }
 
-// Seed seeds the table.
+// Seed seeds the table with fake recs.
 func (a *Authors) Seed() error {
 	for i := 1; i <= 10; i++ {
 		a.db.Create(&Author{
-			FirstName: "Fernand",
-			LastName:  fmt.Sprintf("Galiana%d", i),
+			FirstName: gen.FirstName(gen.RandomGender),
+			LastName:  gen.LastName(),
 			Age:       int(20 + rand.Int31n(80)),
 		})
 		if a.db.Error != nil {
 			return a.db.Error
 		}
 	}
+	log.Info().Msgf("✅ Migrating Authors...")
+
 	return nil
 }

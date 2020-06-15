@@ -6,7 +6,9 @@ import (
 	"fmt"
 	"time"
 
+	gen "github.com/Pallinder/go-randomdata"
 	"github.com/jinzhu/gorm"
+	"github.com/rs/zerolog/log"
 )
 
 // Book represents a book.
@@ -29,20 +31,20 @@ func NewBooks(db *gorm.DB) *Books {
 	return &Books{db: db}
 }
 
-// ByAuthor fetch a books from the given author last name.
-func (b *Books) ByAuthor(ctx context.Context, last string) ([]Book, error) {
-	<<!!YOUR_CODE!!>> -- fetch all books from the given author
+// ByAuthor returns books from a given author.
+func (b *Books) ByAuthor(_ context.Context, last string) ([]Book, error) {
+	<<!!YOUR_CODE!!>> - returns all books from a given author last name
 }
 
 // Index retrieves all books.
-func (b *Books) List(ctx context.Context) ([]Book, error) {
-	<<!!YOUR_CODE!!>> -- fetch all books from DB
+func (b *Books) List(context.Context) ([]Book, error) {
+	<<!!YOUR_CODE!!>> - return all books from db
 }
 
-// Seed seeds the table.
+// Seed seeds the table with fake recs.
 func (b *Books) Seed() error {
 	for i := 1; i <= 10; i++ {
-		title := fmt.Sprintf("Rango%d", i)
+		title := gen.SillyName()
 		b.db.Create(&Book{
 			ISBN:        fmt.Sprintf("%x", sha1.Sum([]byte(title))),
 			Title:       title,
@@ -52,6 +54,7 @@ func (b *Books) Seed() error {
 			return b.db.Error
 		}
 	}
+	log.Info().Msgf("✅ Migrating Books...")
 
 	return nil
 }

@@ -27,6 +27,7 @@ func init() {
 
 func main() {
 	db := mustInitDB()
+	db.LogMode(false)
 	defer terminate(db)
 	trap(db)
 
@@ -57,7 +58,7 @@ func main() {
 		WriteTimeout: defaultTimeout,
 		ReadTimeout:  defaultTimeout,
 	}
-	log.Info().Msgf("BookSvc listening on port %s", svcPort)
+	log.Info().Msgf("🔊 [BookSvc] listening on port `%s", svcPort)
 	log.Panic().Err(svc.ListenAndServe()).Msgf("service failed")
 }
 
@@ -94,7 +95,7 @@ func migrate(db *gorm.DB) (*model.Authors, *model.Books, error) {
 
 func mustInitDB() *gorm.DB {
 	opts := pg.DialOpts{
-		<<!!YOUR_CODE!!>> -- init your connection configuration
+		<<!!YOUR_CODE!!>> -- populate options to connect to the database.
 	}
 
 	db, err := pg.Dial(opts)
@@ -128,7 +129,7 @@ func terminate(db *gorm.DB) {
 func timerWare(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func(t time.Time) {
-			log.Info().Msgf("[%s] %v %s", r.Method, r.RequestURI, time.Since(t))
+			log.Info().Msgf("🔎 [%s] %v %s", r.Method, r.RequestURI, time.Since(t))
 		}(time.Now())
 
 		next.ServeHTTP(w, r)

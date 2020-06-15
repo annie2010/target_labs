@@ -36,5 +36,7 @@ func (d DialOpts) flatten() string {
 
 // Dial dials the connection.
 func Dial(opts DialOpts) (*gorm.DB, error) {
-	<<!!YOUR_CODE!!>> -- open a gorm connection to your database
+	log.Debug().Msgf("🌏 Connecting DB... %s", opts)
+
+	<<!!YOUR_CODE!!>> - open db connection and return it
 }
