@@ -34,20 +34,3 @@ func TestCountHandler(t *testing.T) {
 	assert.Equal(t, "3lpigs", resp.Book)
 	assert.Equal(t, "pig", resp.Word)
 }
-
-func BenchmarkCountHandler(b *testing.B) {
-	var (
-		rr   = httptest.NewRecorder()
-		r, _ = http.NewRequest("GET", "http://example.com/v1/grep/3lpigs/pig", nil)
-		h    = handler.NewBook()
-	)
-
-	mx := mux.NewRouter()
-	mx.HandleFunc(`/v1/grep/{book:[\w]+}/{word:[\w]+}`, h.Count)
-
-	b.ReportAllocs()
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		mx.ServeHTTP(rr, r)
-	}
-}

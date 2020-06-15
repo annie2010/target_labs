@@ -45,16 +45,6 @@ func TestWordCount(t *testing.T) {
 	}
 }
 
-func BenchmarkCount(b *testing.B) {
-	w, line := []byte("moby"), []byte(genSamples(b)[3])
-
-	b.ReportAllocs()
-	b.ResetTimer()
-	for n := 0; n < b.N; n++ {
-		grep.WordCount(w, line)
-	}
-}
-
 // Helpers...
 
 func genSamples(t testing.TB) []string {
