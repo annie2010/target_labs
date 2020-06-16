@@ -17,7 +17,6 @@ import (
 
 const port = "localhost:50052"
 
-//go:generate protoc -I ../../protos --go_out=plugins=grpc:../.. ../../protos/grep.proto
 func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
