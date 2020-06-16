@@ -12,7 +12,7 @@ import (
 func WordCount(word, line []byte) (count int64) {
 	var index int
 	for _, b := range line {
-		if byte(unicode.ToLower(rune(b))) != word[index] {
+		if byte(unicode.ToLower(rune(b))) != byte(unicode.ToLower(rune(word[index]))) {
 			index = 0
 			continue
 		}

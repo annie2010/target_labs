@@ -5,12 +5,10 @@
 package handler
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"net/http"
 	"os"
-	"path/filepath"
 
 	"github.com/gopherland/target_labs/webservice/internal/grep"
 	"github.com/gorilla/mux"
@@ -68,7 +66,7 @@ func count(book, word string) (int64, error) {
 		return 0, errors.New("you must specify a book name and a word")
 	}
 
-	file, err := os.Open(filepath.Join(assetDir, book+".txt"))
+	file, err := os.Open(assetDir + "/" + book + ".txt")
 	if err != nil {
 		return 0, err
 	}
@@ -82,5 +80,5 @@ func count(book, word string) (int64, error) {
 		return 0, err
 	}
 
-	return grep.WordCount(bytes.ToLower([]byte(word)), bb), nil
+	return grep.WordCount([]byte(word), bb), nil
 }
