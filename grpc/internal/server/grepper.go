@@ -5,16 +5,16 @@
 package server
 
 import (
-	"bufio"
 	"context"
 	"errors"
 	"os"
-	"path/filepath"
-	"strings"
 
 	"github.com/gopherland/target_labs/grpc/internal/generated"
 	"github.com/gopherland/target_labs/grpc/internal/grep"
+	"github.com/rs/zerolog/log"
 )
+
+const maxBuff = 10_000
 
 type Grepper struct {
 	generated.UnimplementedGrepperServer
@@ -45,20 +45,19 @@ func (g *Grepper) count(book, word string) (int64, error) {
 		return 0, errors.New("you must specify a book name and a word")
 	}
 
-	file, err := os.Open(filepath.Join(g.assets, book+".txt"))
+	file, err := os.Open(g.assets + "/" + book + ".txt")
 	if err != nil {
 		return 0, err
 	}
-
-	var count int64
-	scanner := bufio.NewScanner(file)
-	w := strings.ToLower(word)
-	for scanner.Scan() {
-		count += grep.WordCount(w, scanner.Text())
-	}
-	if err := scanner.Err(); err != nil {
+	defer func() {
+		if e := file.Close(); e != nil {
+			log.Error().Err(e).Msg("closing file")
+		}
+	}()
+	bb := make([]byte, maxBuff)
+	if _, err = file.Read(bb); err != nil {
 		return 0, err
 	}
 
-	return count, nil
+	return grep.WordCount([]byte(word), bb), nil
 }

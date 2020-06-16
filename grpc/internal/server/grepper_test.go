@@ -23,10 +23,11 @@ func TestGrepper(t *testing.T) {
 
 func BenchmarkGrepper(b *testing.B) {
 	svc := server.NewGrepper("testdata")
-
+	ctx := context.Background()
+	info := generated.BookInfo{Book: "fred", Word: "duh"}
 	b.ReportAllocs()
 	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
-		svc.Grep(context.Background(), &generated.BookInfo{Book: "fred", Word: "duh"})
+		svc.Grep(ctx, &info)
 	}
 }
