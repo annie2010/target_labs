@@ -31,6 +31,7 @@ github.com/google/go-cmp v0.3.1/go.mod h1:8QqcDgzrUqlUb/G2PQTWiueGozuR1884gddMyw
 github.com/google/go-cmp v0.4.0/go.mod h1:v8dTdLbMG2kIc/vJvl+f65V22dbkXbowE6jgT/gNBxE=
 github.com/gopherland/target_labs v0.0.0-20200615225050-e275c3207a27 h1:7RUy66Od04bnRd2pkhqsesPbts/0tBz/dH4PjtPLYv0=
 github.com/gopherland/target_labs v0.0.0-20200616123308-d3f80a081997 h1:jwpmvtWtaZVtPmEjqH8lH0b8ZK+W3mDgzFpP5j31HBU=
+github.com/gopherland/target_labs v0.0.0-20200616125822-053caba6853f h1:sYNr2xUmTKB1HGq9+buiIFR0uhqW3s86AYfJrDV3P4w=
 github.com/jnewmano/grpc-json-proxy v0.0.0-20200427184142-6696b5a3ab05 h1:ybkXVvJW/g6kyy3nGNpWKFpGbJWC9VcKsVn/CL/AhYc=
 github.com/jnewmano/grpc-json-proxy v0.0.0-20200427184142-6696b5a3ab05/go.mod h1:Zz2ZAXRrFFORvmq8s96zWbdax94ARDP4yUK8XR9V3cc=
 github.com/kisielk/errcheck v1.1.0/go.mod h1:EZBBE59ingxPouuu3KfxchcWSUPOHkagtvWXihfKN4Q=

@@ -20,30 +20,11 @@ const (
 )
 
 func main() {
-	var book, word string
-	flag.StringVar(&book, "b", "3lpigs", "Specify a book")
-	flag.StringVar(&word, "w", "pig", "Specify a word")
-	flag.Parse()
+	<<!!YOUR_CODE!!>> - Using the flag package parse the cli args: book, word
+	<<!!YOUR_CODE!!>> - Establish server connection using contexts
+	<<!!YOUR_CODE!!>> - Issue server side grep using your book and word
 
-	// Set up a connection to the server.
-	log.Printf("Client Dialing %q...", port)
-	ctx, cancel := context.WithTimeout(context.Background(), timeOut)
-	defer cancel()
-
-	conn, err := grpc.DialContext(ctx, port, grpc.WithInsecure(), grpc.WithBlock())
-	if err != nil {
-		log.Fatalf("did not connect: %v", err)
-	}
-	defer conn.Close()
-	c := generated.NewGrepperClient(conn)
-
-	ctx, cancel = context.WithTimeout(context.Background(), timeOut)
-	defer cancel()
-	r, err := c.Grep(ctx, &generated.BookInfo{Book: book, Word: word})
-	if err != nil {
-		log.Fatalf("Boom! Grep failed: %v", err)
-	}
-	log.Printf("Book: %s", r.Book)
-	log.Printf("Word: %s", r.Word)
-	log.Printf("Count: %d", r.Total)
+	log.Printf("Book: %s", resp.Book)
+	log.Printf("Word: %s", resp.Word)
+	log.Printf("Count: %d", resp.Total)
 }
